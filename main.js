@@ -2,6 +2,7 @@ const { menubar } = require('menubar');
 const { globalShortcut, localShortcut } = require('electron')
 
 const mb = menubar({
+  index: `file://${process.cwd()}/build/index.html`,
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
@@ -14,11 +15,9 @@ const mb = menubar({
 
 
 mb.on('ready', () => {
-
   globalShortcut.register('CommandOrControl+L', () => {
     mb.showWindow();
   });
-
 });
 
 mb.on('focus-lost', mb.hideWindow);
