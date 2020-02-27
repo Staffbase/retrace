@@ -2,8 +2,7 @@ import React, { ReactElement, useState, useCallback, KeyboardEvent, ChangeEvent 
 import { useDispatch } from 'react-redux';
 import { addItem } from './store/Actions';
 import styled from 'styled-components';
-
-const ipcRenderer = require('electron').ipcRenderer;
+import { ipcRenderer } from 'electron';
 
 const Form = (): ReactElement => {
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ const Form = (): ReactElement => {
 
   return (
     <form onSubmit={onSubmit}>
-      <StyledInput type="text" onChange={onChange} value={value} />
+      <StyledInput autoFocus={true} type="text" onChange={onChange} value={value} />
     </form>
   )
 };

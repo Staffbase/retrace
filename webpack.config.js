@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  target: 'electron-renderer',
   entry: {
     app: ['./src/index.tsx'],
     vendor: ['react', 'react-dom']

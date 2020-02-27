@@ -1,6 +1,5 @@
 const { menubar } = require('menubar');
 const { globalShortcut, ipcMain } = require('electron');
-const path = require('path');
 
 const mb = menubar({
   index: `file://${process.cwd()}/build/index.html`,
@@ -9,12 +8,15 @@ const mb = menubar({
     useContentSize: true,
     transparent: true,
     width: 500,
-    height: 47
+    height: 47,
+    webPreferences: {
+      nodeIntegration: true
+    }
   },
   preloadWindow: true,
   tooltip: 'Shutdown',
-  windowPosition: 'center',
-  icon: "./check_icon.png"
+  windowPosition: 'center'//,
+  //icon: "./check_icon.png"
 });
 
 mb.on('ready', () => {
@@ -25,6 +27,6 @@ mb.on('ready', () => {
 
 mb.on('focus-lost', mb.hideWindow);
 
-ipcMain.on('close-window', (event) => {
+ipcMain.on('close-window', () => {
   mb.hideWindow();
 });

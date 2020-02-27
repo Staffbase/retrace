@@ -1,5 +1,5 @@
-import { Item, StoreState } from './Types';
-import { createStore, combineReducers, Store } from 'redux';
+import { StoreState } from './Types';
+import { createStore, Store } from 'redux';
 import nanoid from 'nanoid';
 import { reducer } from './Reducers';
 import throttle from 'lodash.throttle';
