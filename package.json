@@ -7,7 +7,7 @@
   "author": "Frank Adler <hi@adfr.io>",
   "license": "MIT",
   "scripts": {
-    "start": "electron ."
+    "start": "electron . --enable-features=Metal"
   },
   "dependencies": {
     "electron": "^8.0.2",

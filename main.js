@@ -1,7 +1,17 @@
 const { menubar } = require('menubar');
 const { globalShortcut, localShortcut } = require('electron')
 
-const mb = menubar();
+const mb = menubar({
+  browserWindow: {
+    alwaysOnTop: true,
+    useContentSize: true,
+    transparent: false
+  },
+  preloadWindow: true,
+  tooltip: 'Shutdown',
+  windowPosition: 'center'
+});
+
 
 mb.on('ready', () => {
 
@@ -10,3 +20,5 @@ mb.on('ready', () => {
   });
 
 });
+
+mb.on('focus-lost', mb.hideWindow);
