@@ -7,11 +7,21 @@ import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 
 const App = (): ReactElement => {
-  const [isCollapsed, setCollapsed] = useState<Boolean>(true);
+  const [isCollapsed, setCollapsed] = useState<Boolean>(false);
 
   useEffect(() => {
     ipcRenderer.send(`window-${isCollapsed ? 'collapse' : 'expand'}`);
   }, [isCollapsed]);
+
+  useEffect(() => {
+    ipcRenderer.on('window-collapse', () => {
+      setCollapsed(true);
+    });
+
+    ipcRenderer.on('window-expand', () => {
+      setCollapsed(false);
+    });
+  }, []);
 
   const toggleCollapsed = useCallback(() => {
     setCollapsed(!isCollapsed);
