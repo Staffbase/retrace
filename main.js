@@ -12,9 +12,9 @@ const mb = menubar({
   },
   preloadWindow: true,
   tooltip: 'Shutdown',
-  windowPosition: 'center'
+  windowPosition: 'center',
+  icon: "./check_icon.png"
 });
-
 
 mb.on('ready', () => {
   globalShortcut.register('CommandOrControl+L', () => {
