@@ -3,7 +3,6 @@ import { createStore, Store } from 'redux';
 import nanoid from 'nanoid';
 import { reducer } from './Reducers';
 import throttle from 'lodash.throttle';
-import { ipcRenderer } from 'electron';
 import {default as ElectronStore} from 'electron-store';
 
 const electronStore = new ElectronStore({

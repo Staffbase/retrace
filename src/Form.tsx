@@ -4,7 +4,7 @@ import { addItem } from './store/Actions';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 
-const Form = (): ReactElement => {
+const Form = (props: {onSubmit: () => void}): ReactElement => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
 
@@ -22,6 +22,8 @@ const Form = (): ReactElement => {
     dispatch(addItem({ label: value }));
     setValue('');
 
+    props.onSubmit();
+
     ipcRenderer.send('close-window');
   }, [value]);
 
@@ -31,6 +33,11 @@ const Form = (): ReactElement => {
     </form>
   )
 };
+
+const StyledForm = styled.form`
+  display: flex;
+  flex: 1 1 auto;
+`;
 
 const StyledInput = styled.input`
   display: block;

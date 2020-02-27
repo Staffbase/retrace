@@ -30,3 +30,11 @@ mb.on('focus-lost', mb.hideWindow);
 ipcMain.on('close-window', () => {
   mb.hideWindow();
 });
+
+ipcMain.on('window-collapse', () => {
+  mb.window.setSize(500, 47);
+});
+
+ipcMain.on('window-expand', () => {
+  mb.window.setSize(500, 250);
+});

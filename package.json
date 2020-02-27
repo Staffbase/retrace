@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "build_web": "webpack",
-    "start": "yarn build_web; electron . --enable-features=Metal"
+    "start": "yarn build_web && electron . --enable-features=Metal"
   },
   "dependencies": {
     "@types/styled-components": "^5.0.1",
