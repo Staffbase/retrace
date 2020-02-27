@@ -1,6 +1,7 @@
 import React, { ReactElement, useState, useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem } from './store/Actions';
+import styled from 'styled-components';
 
 const Form = (): ReactElement => {
   const dispatch = useDispatch();
@@ -23,9 +24,24 @@ const Form = (): ReactElement => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="text" onChange={onChange} value={value} />
+      <StyledInput type="text" onChange={onChange} value={value} />
     </form>
   )
 };
+
+const StyledInput = styled.input`
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  padding: 12px 15px;
+}
+
+
+
+
+
+`;
 
 export default Form;

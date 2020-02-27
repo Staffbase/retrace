@@ -6,7 +6,9 @@ const mb = menubar({
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
-    transparent: false
+    transparent: true,
+    width: 500,
+    height: 47
   },
   preloadWindow: true,
   tooltip: 'Shutdown',
