@@ -3,18 +3,22 @@ import { createStore, Store } from 'redux';
 import nanoid from 'nanoid';
 import { reducer } from './Reducers';
 import throttle from 'lodash.throttle';
+import { ipcRenderer } from 'electron';
+import {default as ElectronStore} from 'electron-store';
+
+const electronStore = new ElectronStore({
+  name: 'database'
+});
 
 const appID = localStorage.getItem('appID') || nanoid(42);
 const storageID = `data_${appID}`;
 
 const restoreState = (): StoreState => {
-  const oldState = localStorage.getItem(storageID);
-  return oldState && JSON.parse(oldState) ||
-    { data: {}, total: 0 };
+  return electronStore.get('state');
 };
 
 const saveState = (state: StoreState): void => {
-  localStorage.setItem(storageID, JSON.stringify(state));
+  electronStore.set('state', state);
 };
 
 const store: Store = createStore(reducer, restoreState());
