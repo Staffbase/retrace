@@ -29,8 +29,10 @@ const expand = () => {
 
 mb.on('ready', () => {
   globalShortcut.register('CommandOrControl+L', () => {
+    // initiate smaller hotkey mode, collapsed and centered
     collapse();
     mb.setOption('windowPosition', 'center');
+
     mb.showWindow();
   });
 });
@@ -38,8 +40,12 @@ mb.on('ready', () => {
 mb.on('focus-lost', mb.hideWindow);
 
 mb.on('after-hide', () => {
+  // restore initial menu bar app position
   mb.setOption('windowPosition', 'trayCenter');
   expand();
+
+  // restore focus to where it was before
+  mb.app.hide()
 });
 
 ipcMain.on('close-window', () => {
