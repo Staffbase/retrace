@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { addItem } from './store/Actions';
 import styled from 'styled-components';
 
+const ipcRenderer = require('electron').ipcRenderer;
+
 const Form = (): ReactElement => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
@@ -20,6 +22,8 @@ const Form = (): ReactElement => {
 
     dispatch(addItem({ label: value }));
     setValue('');
+
+    ipcRenderer.send('close-window');
   }, [value]);
 
   return (
@@ -36,12 +40,6 @@ const StyledInput = styled.input`
   border-radius: 4px;
   font-size: 20px;
   padding: 12px 15px;
-}
-
-
-
-
-
 `;
 
 export default Form;

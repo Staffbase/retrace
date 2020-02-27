@@ -1,5 +1,6 @@
 const { menubar } = require('menubar');
-const { globalShortcut, localShortcut } = require('electron')
+const { globalShortcut, ipcMain } = require('electron');
+const path = require('path');
 
 const mb = menubar({
   index: `file://${process.cwd()}/build/index.html`,
@@ -23,3 +24,7 @@ mb.on('ready', () => {
 });
 
 mb.on('focus-lost', mb.hideWindow);
+
+ipcMain.on('close-window', (event) => {
+  mb.hideWindow();
+});
