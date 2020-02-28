@@ -14,7 +14,7 @@ const mb = menubar({
     }
   },
   preloadWindow: true,
-  tooltip: 'Recap'
+  tooltip: 'RE:Trace'
 });
 
 const collapse = (skipEvent) => {
@@ -30,8 +30,8 @@ const expand = (skipEvent) => {
     mb.window.webContents.send('window-expand');
   }
 
-  mb.window.setSize(500, 250);
-}
+  mb.window.setSize(500, 350);
+};
 
 mb.on('ready', () => {
   globalShortcut.register('CommandOrControl+L', () => {
@@ -49,7 +49,7 @@ mb.on('focus-lost', mb.hideWindow);
 
 mb.on('after-hide', () => {
   // restore initial menu bar app position
-  mb.setOption('windowPosition', 'trayCenter');
+  mb.setOption('windowPosition', 'trayRight');
   expand();
 
   mb.window.webContents.send('reset-calendar');

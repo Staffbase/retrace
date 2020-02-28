@@ -28,9 +28,9 @@ const Form = (props: {onSubmit: () => void}): ReactElement => {
   }, [value]);
 
   return (
-    <form onSubmit={onSubmit}>
+    <StyledForm onSubmit={onSubmit}>
       <StyledInput autoFocus={true} type="text" onChange={onChange} value={value} />
-    </form>
+    </StyledForm>
   )
 };
 
@@ -43,9 +43,16 @@ const StyledInput = styled.input`
   display: block;
   width: 100%;
   border: none;
-  border-radius: 4px;
   font-size: 20px;
   padding: 12px 15px;
+  background-color: transparent;
+  color: #fff;
+  border-radius: 3px;
+  
+  &:active, &:focus {
+    background-color: #151515;
+    outline: 1px solid #444;
+  }
 `;
 
 export default Form;

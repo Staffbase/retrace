@@ -31,7 +31,7 @@ const App = (): ReactElement => {
     <Provider store={store}>
       <HBox>
         <Form onSubmit={setCollapsed.bind(null, true)} />
-        <StyledToggleButton onClick={toggleCollapsed}>(i)</StyledToggleButton>
+        <StyledToggleButton onClick={toggleCollapsed} />
       </HBox>
 
       {!isCollapsed && <DetailView />}
@@ -42,10 +42,22 @@ const App = (): ReactElement => {
 const HBox = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: #1a1a1a;
 `;
 
 const StyledToggleButton = styled.button`
   flex: 0 0 auto;
+  appearance: none;
+  background-color: transparent;
+  background-image: url("../iconTemplate@2x.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 20px 20px;
+  color: #ccc;
+  font-weight: bold;
+  width: 47px;
+  border: none;
+  outline: none;
 `;
 
 export default App;

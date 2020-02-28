@@ -23,6 +23,10 @@ module.exports = {
         loader: ['style-loader', 'css-loader']
       },
       {
+        test: /\.png$/,
+        loader: "url-loader?mimetype=image/png"
+      },
+      {
         test: /\.(ts|tsx)$/,
         loader: 'ts-loader'
       },
