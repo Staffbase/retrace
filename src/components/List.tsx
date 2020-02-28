@@ -59,10 +59,12 @@ const StyledListItem = styled.li`
     color: #444;
     margin-right: 15px;
     flex: 0 0 auto;
+    line-height: 26px;
   }
   
   & > label {
     flex: 1 1 auto;
+    line-height: 26px;
   }
   
   & > label > em {
