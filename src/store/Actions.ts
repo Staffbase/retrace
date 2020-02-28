@@ -1,9 +1,10 @@
-import { PartialItem, Item } from './Types';
+import {PartialItem, Item, DateFilter} from './Types';
 
 export enum ActionTypes {
   ADD_ITEM,
   UPDATE_ITEM,
-  REMOVE_ITEM
+  REMOVE_ITEM,
+  SET_FILTER
 };
 
 export interface ActionPayload<T> {
@@ -31,3 +32,10 @@ export const removeItem = (data: Item): ActionPayload<Item> => {
     data
   };
 };
+
+export const setFilter = (from: number, to: number): ActionPayload<DateFilter> => {
+  return {
+    type: ActionTypes.SET_FILTER,
+    data: {from, to}
+  };
+}

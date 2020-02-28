@@ -14,16 +14,22 @@ const mb = menubar({
     }
   },
   preloadWindow: true,
-  tooltip: 'Shutdown'
+  tooltip: 'Recap'
 });
 
-const collapse = () => {
-  mb.window.webContents.send('window-collapse');
+const collapse = (skipEvent) => {
+  if (!skipEvent) {
+    mb.window.webContents.send('window-collapse');
+  }
+
   mb.window.setSize(500, 47);
 };
 
-const expand = () => {
-  mb.window.webContents.send('window-expand');
+const expand = (skipEvent) => {
+  if (!skipEvent) {
+    mb.window.webContents.send('window-expand');
+  }
+
   mb.window.setSize(500, 250);
 }
 
@@ -35,6 +41,8 @@ mb.on('ready', () => {
 
     mb.showWindow();
   });
+
+  mb.window.webContents.send('reset-calendar');
 });
 
 mb.on('focus-lost', mb.hideWindow);
@@ -44,6 +52,8 @@ mb.on('after-hide', () => {
   mb.setOption('windowPosition', 'trayCenter');
   expand();
 
+  mb.window.webContents.send('reset-calendar');
+
   // restore focus to where it was before
   mb.app.hide()
 });
@@ -52,5 +62,5 @@ ipcMain.on('close-window', () => {
   mb.hideWindow();
 });
 
-ipcMain.on('window-collapse', collapse);
-ipcMain.on('window-expand', expand);
+ipcMain.on('window-collapse', collapse.bind(null, true));
+ipcMain.on('window-expand', expand.bind(null, true));

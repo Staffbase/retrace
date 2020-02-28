@@ -7,7 +7,13 @@ export interface Item extends PartialItem {
   createdAt: number;
 }
 
+export interface DateFilter {
+  from: number;
+  to: number;
+}
+
 export interface StoreState {
   data: Record<string, Item>;
   total: number;
+  filter: DateFilter;
 }

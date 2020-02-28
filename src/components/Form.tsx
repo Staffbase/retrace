@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useCallback, KeyboardEvent, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
-import { addItem } from './store/Actions';
+import { addItem } from '../store/Actions';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 

@@ -3,7 +3,16 @@ import { ActionPayload, ActionTypes } from './Actions';
 import { Reducer } from 'redux';
 import nanoid from 'nanoid';
 
-export const reducer: Reducer<StoreState, ActionPayload<any>> = (state: StoreState = { data: {}, total: 0} , action: ActionPayload<any>): StoreState => {
+const DEFAULT_STATE = {
+  data: {},
+  total: 0,
+  filter: {
+    from: 0,
+    to: 0
+  }
+};
+
+export const reducer: Reducer<StoreState, ActionPayload<any>> = (state: StoreState = DEFAULT_STATE, action: ActionPayload<any>): StoreState => {
   let id;
   let data;
 
@@ -51,6 +60,16 @@ export const reducer: Reducer<StoreState, ActionPayload<any>> = (state: StoreSta
       return {
         ...state,
         data
+      };
+
+    case ActionTypes.SET_FILTER:
+      if (action.data.from === state.filter.from) {
+        return state;
+      }
+
+      return {
+        ...state,
+        filter: action.data
       };
 
     default:

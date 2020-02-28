@@ -1,10 +1,10 @@
 import React, { ReactElement, useCallback, useState, useEffect } from 'react';
-import { Provider } from 'react-redux';
+import {Provider, useDispatch} from 'react-redux';
 import store from './store/Store';
-import List from './List';
-import Form from './Form';
+import Form from './components/Form';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
+import DetailView from "./components/DetailView";
 
 const App = (): ReactElement => {
   const [isCollapsed, setCollapsed] = useState<Boolean>(false);
@@ -34,7 +34,7 @@ const App = (): ReactElement => {
         <StyledToggleButton onClick={toggleCollapsed}>(i)</StyledToggleButton>
       </HBox>
 
-      {!isCollapsed && <List />}
+      {!isCollapsed && <DetailView />}
     </Provider>
   );
 };
@@ -45,7 +45,6 @@ const HBox = styled.div`
 `;
 
 const StyledToggleButton = styled.button`
-  display: flex;
   flex: 0 0 auto;
 `;
 
