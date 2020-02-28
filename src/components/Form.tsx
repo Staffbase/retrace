@@ -50,8 +50,8 @@ const StyledInput = styled.input`
   border-radius: 3px;
   
   &:active, &:focus {
-    background-color: #151515;
-    outline: 1px solid #444;
+    background-color: #121212;
+    outline: none;
   }
 `;
 
