@@ -1,7 +1,8 @@
-import React, {ReactElement, useEffect, useState} from 'react';
-import {useSelector} from "react-redux";
+import React, {ReactElement, useCallback, MouseEvent} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import {StoreState} from "../store/Types";
 import styled from "styled-components";
+import {setFilter} from "../store/Actions";
 
 const DAYS = [
     'Monday',
@@ -15,20 +16,46 @@ const DAYS = [
 
 export default function Calendar(): ReactElement {
   const filter = useSelector((state: StoreState) => state.filter);
+  const dispatch = useDispatch();
   const today = new Date(filter.from).getDate();
   const dayOfTheWeek = new Date(filter.from).getDay();
   const firstDayOfTheWeek = today - (dayOfTheWeek - 1);
 
+  const onClick = (event: MouseEvent<HTMLDivElement>) => {
+    let selectedFrom: string | null = event.currentTarget.getAttribute('data-from');
+
+    if (!selectedFrom) {
+      return;
+    }
+
+    const selectedDate = parseInt(selectedFrom);
+
+    const newDate = new Date(selectedDate);
+    newDate.setHours(23, 59, 59, 99);
+
+    dispatch(setFilter(selectedDate, newDate.getTime()));
+  };
+
   const items = new Array(7).fill(0).map((_, idx: number) => {
     const date = firstDayOfTheWeek + idx;
-    return <DayItem key={date} className={idx === (dayOfTheWeek - 1) ? 'active' : ''}>
-      <span>
-        {date}
-        <small>
-          {DAYS[idx]}
-        </small>
-      </span>
-    </DayItem>;
+    const itemDate = new Date(filter.from);
+    itemDate.setDate(date);
+
+    return (
+      <DayItem
+        key={date}
+        className={idx === (dayOfTheWeek - 1) ? 'active' : ''}
+        data-from={itemDate.getTime()}
+        onClick={onClick}
+      >
+        <span>
+          {date}
+          <small>
+            {DAYS[idx]}
+          </small>
+        </span>
+      </DayItem>
+    );
   });
 
   return (
@@ -47,6 +74,7 @@ const CalendarWrapper = styled.div`
 const DayItem = styled.div`
   flex: 1 0 calc(100% / 7);
   position: relative;
+  cursor: pointer;
   
   & > span {
    display: inline-block;
