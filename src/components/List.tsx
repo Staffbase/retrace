@@ -3,6 +3,10 @@ import { useSelector } from "react-redux";
 import { StoreState, Item } from "../store/Types";
 import styled from "styled-components";
 
+const lpad = (n: number): string => {
+  return `${n < 10 ? '0' : ''}${n}`;
+};
+
 const List = (): ReactElement => {
   const data = useSelector(((state: StoreState) => state.data));
   const filter = useSelector(((state: StoreState) => state.filter));
@@ -10,10 +14,17 @@ const List = (): ReactElement => {
   const items = Object.values(data).filter((item: Item) => {
     return item.createdAt >= filter.from && item.createdAt <= filter.to;
   }).sort((itemA: Item, itemB: Item) => {
-    return itemA.createdAt === itemB.createdAt ? 0 : (itemA.createdAt > itemB.createdAt ? 1 : -1);
-  }).map((item: Item) => (
-    <StyledListItem className="item" key={item.id} data-item-id={item.id}>{item.label}</StyledListItem>
-  ));
+    return itemA.createdAt === itemB.createdAt ? 0 : (itemA.createdAt > itemB.createdAt ? -1 : 1);
+  }).map((item: Item) => {
+    const created = new Date(item.createdAt);
+
+    return (
+      <StyledListItem className="item" key={item.id} data-item-id={item.id}>
+        <small>{lpad(created.getHours()) + ':' + lpad(created.getMinutes())}</small>
+        <label>{item.label}</label>
+      </StyledListItem>
+    )
+  });
 
   return (
     <StyledList>
@@ -28,13 +39,25 @@ const StyledList = styled.ul`
   background-color: #222;
   display: block;
   margin: 0;
-  padding: 0 30px;
+  padding: 0;
   height: 232px;
   overflow: auto;
 `;
 
 const StyledListItem = styled.li`
-  padding: 8px 15px 8px 0;
+  padding: 8px 15px;
   color: #888;
   border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: row;
+  
+  & > small {
+    color: #444;
+    margin-right: 15px;
+    flex: 0 0 auto;
+  }
+  
+  & > label {
+    flex: 1 1 auto;
+  }
 `;

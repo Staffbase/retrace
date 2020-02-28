@@ -1,5 +1,6 @@
 {
-  "name": "shutdown",
+  "name": "retrace",
+  "productName": "RE:Trace",
   "version": "1.0.0",
   "description": "Minimal tool for end-of-day braindumps.",
   "main": "main.js",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^16.9.5",
     "@types/react-redux": "^7.1.7",
     "css-loader": "^3.4.2",
+    "electron-packager": "^14.2.1",
     "html-webpack-plugin": "^3.2.0",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.1.3",
