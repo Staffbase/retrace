@@ -4,7 +4,7 @@ import { addItem } from '../store/Actions';
 import styled from 'styled-components';
 import { ipcRenderer } from 'electron';
 
-const Form = (props: {onSubmit: () => void}): ReactElement => {
+const Form = (props: {closeAfterSubmit: Boolean}): ReactElement => {
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>('');
 
@@ -22,10 +22,10 @@ const Form = (props: {onSubmit: () => void}): ReactElement => {
     dispatch(addItem({ label: value }));
     setValue('');
 
-    props.onSubmit();
-
-    ipcRenderer.send('close-window');
-  }, [value]);
+    if (props.closeAfterSubmit) {
+      ipcRenderer.send('close-window');
+    }
+  }, [value, props.closeAfterSubmit]);
 
   return (
     <StyledForm onSubmit={onSubmit}>

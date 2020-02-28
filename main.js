@@ -14,6 +14,7 @@ const mb = menubar({
     }
   },
   preloadWindow: true,
+  windowPosition: 'trayRight',
   tooltip: 'RE:Trace'
 });
 

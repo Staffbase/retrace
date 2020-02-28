@@ -30,7 +30,7 @@ const App = (): ReactElement => {
   return (
     <Provider store={store}>
       <HBox>
-        <Form onSubmit={setCollapsed.bind(null, true)} />
+        <Form closeAfterSubmit={isCollapsed} />
         <StyledToggleButton onClick={toggleCollapsed} />
       </HBox>
 

@@ -21,7 +21,11 @@ const List = (): ReactElement => {
     return (
       <StyledListItem className="item" key={item.id} data-item-id={item.id}>
         <small>{lpad(created.getHours()) + ':' + lpad(created.getMinutes())}</small>
-        <label>{item.label}</label>
+        <label dangerouslySetInnerHTML={{
+          __html: item.label
+              .replace(/\#[a-zA-Z0-9]*/g, (str: string) => (`<em class="hashtag">${str}</em>`))
+              .replace(/\@[a-zA-Z0-9]*/g, (str: string) => (`<em class="mention">${str}</em>`))
+        }}/>
       </StyledListItem>
     )
   });
@@ -59,5 +63,17 @@ const StyledListItem = styled.li`
   
   & > label {
     flex: 1 1 auto;
+  }
+  
+  & > label > em {
+    font-style: normal;
+  }
+  
+  & > label > em.hashtag {
+    color: #00a4fd;
+  }
+  
+  & > label > em.mention {
+    color: #fd4750;
   }
 `;

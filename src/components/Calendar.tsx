@@ -5,14 +5,14 @@ import styled from "styled-components";
 import {setFilter} from "../store/Actions";
 
 const DAYS = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
-    'Sunday'
-]
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday'
+];
 
 export default function Calendar(): ReactElement {
   const filter = useSelector((state: StoreState) => state.filter);
