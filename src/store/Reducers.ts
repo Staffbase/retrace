@@ -1,4 +1,4 @@
-import {PartialItem, StoreState, DateFilter} from "./Types";
+import { PartialItem, StoreState, DateFilter } from "./Types";
 import { ActionPayload, ActionTypes } from "./Actions";
 import { Reducer } from "redux";
 import nanoid from "nanoid";
@@ -28,7 +28,7 @@ export const reducer: Reducer<
       id = nanoid(16);
 
       data[id] = {
-        ...action.data as PartialItem,
+        ...(action.data as PartialItem),
         createdAt: new Date().getTime(),
         id: id
       };

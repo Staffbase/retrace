@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../store/Actions";
 import styled from "styled-components";
 import { ipcRenderer } from "electron";
-import {flatten} from "../utils";
+import { flatten } from "../utils";
 
 const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
   const dispatch = useDispatch();
