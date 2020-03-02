@@ -1,8 +1,9 @@
 const { menubar } = require("menubar");
-const { globalShortcut, ipcMain } = require("electron");
+const { globalShortcut, ipcMain, Menu } = require("electron");
+const path = require("path");
 
 const mb = menubar({
-  index: `file://${process.cwd()}/build/index.html`,
+  index: "file://" + path.resolve(__dirname, "build/index.html"),
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
@@ -13,6 +14,7 @@ const mb = menubar({
       nodeIntegration: true
     }
   },
+  icon: path.resolve(__dirname, "assets/icon.png"),
   preloadWindow: true,
   windowPosition: "trayRight",
   tooltip: "RE:Trace"
@@ -34,6 +36,14 @@ const expand = skipEvent => {
   mb.window.setSize(500, 350);
 };
 
+const secondaryMenu = Menu.buildFromTemplate([
+  {
+    label: "Quit",
+    click: mb.app.quit,
+    accelerator: "CommandOrControl+Q"
+  }
+]);
+
 mb.on("ready", () => {
   globalShortcut.register("CommandOrControl+L", () => {
     // initiate smaller hotkey mode, collapsed and centered
@@ -41,6 +51,10 @@ mb.on("ready", () => {
     mb.setOption("windowPosition", "center");
 
     mb.showWindow();
+  });
+
+  mb.tray.on("right-click", () => {
+    mb.tray.popUpContextMenu(secondaryMenu);
   });
 
   mb.window.webContents.send("reset-calendar");

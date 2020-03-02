@@ -1,22 +1,25 @@
 {
   "name": "retrace",
-  "productName": "RE:Trace",
+  "productName": "RE-Trace",
   "version": "1.0.0",
   "description": "Minimal tool for end-of-day braindumps.",
   "main": "main.js",
   "repository": "git@github.com:Staffbase/hackathon_shutdown.git",
   "author": "Frank Adler <hi@adfr.io>",
+  "homepage": "https://adfr.io",
   "license": "MIT",
   "scripts": {
     "build_web": "webpack",
-    "start": "yarn build_web && electron . --enable-features=Metal",
+    "start": "yarn build_web && electron-forge start",
     "lint": "eslint src/**/*.ts src/**/*.tsx ./*.js",
-    "fix": "eslint src/**/*.ts src/**/*.tsx ./*.js --fix"
+    "fix": "eslint src/**/*.ts src/**/*.tsx ./*.js --fix",
+    "package": "yarn build_web && electron-forge package",
+    "make": "yarn build_web && electron-forge make"
   },
   "dependencies": {
     "@types/styled-components": "^5.0.1",
     "dompurify": "^2.0.8",
-    "electron": "^8.0.2",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
     "lodash.throttle": "^4.1.1",
     "menubar": "^8.0.0",
@@ -28,6 +31,12 @@
     "styled-components": "^5.0.1"
   },
   "devDependencies": {
+    "@electron-forge/cli": "6.0.0-beta.50",
+    "@electron-forge/maker-deb": "6.0.0-beta.50",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.50",
+    "@electron-forge/maker-zip": "6.0.0-beta.50",
     "@types/dompurify": "^2.0.1",
     "@types/lodash.throttle": "^4.1.6",
     "@types/nanoid": "^2.1.0",
@@ -37,7 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "css-loader": "^3.4.2",
-    "electron-packager": "^14.2.1",
+    "electron": "^8.0.2",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
@@ -51,5 +60,46 @@
     "url-loader": "^3.0.0",
     "webpack": "^4.41.6",
     "webpack-cli": "^3.3.11"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./assets/icon.icns"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "retrace"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin",
+            "linux"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "options": {
+              "maintainer": "Frank Adler",
+              "homepage": "https://adfr.io"
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-dmg",
+          "config": {
+            "format": "ULFO"
+          }
+        }
+      ]
+    }
   }
 }
