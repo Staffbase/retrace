@@ -1,3 +1,5 @@
+![[RE]Trace](https://raw.githubusercontent.com/Staffbase/retrace/master/logo.png)
+
 # [RE]Trace
 
 [RE]Trace makes journaling fast while staying out of your way. No cluttered UI, no long click paths to create your new entry. Just hit the shortcur (`CMD + L` on Mac, `Ctrl + L` on Windows and Linux), enter what's on your mind, hit `Enter` and you're done. 
