@@ -2,4 +2,8 @@ build/
 out/
 node_modules/
 yarn-error.log
+.idea/
+.vscode
+
 .DS_Store
+*.iml
