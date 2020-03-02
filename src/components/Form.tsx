@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { addItem } from "../store/Actions";
 import styled from "styled-components";
 import { ipcRenderer } from "electron";
+import {flatten} from "../utils";
 
 const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
 
   const onChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value || "");
+      setValue(flatten(event.target.value));
     },
     [value]
   );
