@@ -14,6 +14,14 @@ const DAYS = [
   'Sunday'
 ];
 
+function getLastDayOfMonth (month: number) {
+  const date = new Date();
+  date.setMonth(month + 1);
+  date.setDate(1);
+  date.setHours(0,0,0,0);
+  return new Date(date.getTime() - 100).getDate();
+}
+
 export default function Calendar(): ReactElement {
   const filter = useSelector((state: StoreState) => state.filter);
   const dispatch = useDispatch();
@@ -22,12 +30,8 @@ export default function Calendar(): ReactElement {
   const dayOfTheWeek = now.getDay();
   const firstDayOfTheWeek = today - (dayOfTheWeek - 1);
 
-  const nextMonth = new Date(filter.from);
-  nextMonth.setMonth(nextMonth.getMonth() + 1)
-  nextMonth.setDate(1);
-  nextMonth.setHours(0,0,0,0);
-
-  const lastDayOfMonth = new Date(nextMonth.getTime() - 100).getDate();
+  const lastDayOfPreviousMonth = getLastDayOfMonth(now.getMonth() - 1);
+  const lastDayOfNextMonth = getLastDayOfMonth(now.getMonth());
 
   const onClick = (event: MouseEvent<HTMLDivElement>) => {
     let selectedFrom: string | null = event.currentTarget.getAttribute('data-from');
@@ -48,10 +52,14 @@ export default function Calendar(): ReactElement {
     let date = firstDayOfTheWeek + idx;
     const itemDate = new Date(filter.from);
 
-    // Overflow to next month
-    if (date > lastDayOfMonth) {
-      date = date - lastDayOfMonth;
+    if (date > lastDayOfNextMonth) {
+      // Overflow to next month
+      date = date - lastDayOfNextMonth;
       itemDate.setMonth(itemDate.getMonth() + 1);
+    } else if (date < 1) {
+      // Overflow to previous month
+      date = lastDayOfPreviousMonth + date;
+      itemDate.setMonth(itemDate.getMonth() - 1)
     }
 
     // TODO: Fix overflow into last month
