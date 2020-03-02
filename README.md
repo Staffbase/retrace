@@ -1,4 +1,4 @@
-![[RE]Trace](https://raw.githubusercontent.com/Staffbase/retrace/master/logo.png)
+![[RE]Trace](https://github.com/Staffbase/retrace/blob/master/logo.png?raw=true)
 
 # [RE]Trace
 
