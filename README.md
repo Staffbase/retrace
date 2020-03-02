@@ -4,7 +4,7 @@ RE-Trace makes journaling fast while staying out of your way. No cluttered UI, n
 
 In the evening, make sure to take a deep breath and recap your day.
 
-## Install
+## Development
 
 1. Install dependencies `> yarn`
 2. Start `yarn start`
