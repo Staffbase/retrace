@@ -7,7 +7,7 @@ import { ipcRenderer } from 'electron';
 import DetailView from "./components/DetailView";
 
 const App = (): ReactElement => {
-  const [isCollapsed, setCollapsed] = useState<Boolean>(false);
+  const [isCollapsed, setCollapsed] = useState<boolean>(false);
 
   useEffect(() => {
     ipcRenderer.send(`window-${isCollapsed ? 'collapse' : 'expand'}`);
