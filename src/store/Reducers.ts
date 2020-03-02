@@ -1,7 +1,7 @@
-import { StoreState } from './Types';
-import { ActionPayload, ActionTypes } from './Actions';
-import { Reducer } from 'redux';
-import nanoid from 'nanoid';
+import { StoreState } from "./Types";
+import { ActionPayload, ActionTypes } from "./Actions";
+import { Reducer } from "redux";
+import nanoid from "nanoid";
 
 const DEFAULT_STATE = {
   data: {},
@@ -12,7 +12,13 @@ const DEFAULT_STATE = {
   }
 };
 
-export const reducer: Reducer<StoreState, ActionPayload<any>> = (state: StoreState = DEFAULT_STATE, action: ActionPayload<any>): StoreState => {
+export const reducer: Reducer<
+  StoreState,
+  ActionPayload<Record<string, any>>
+> = (
+  state: StoreState = DEFAULT_STATE,
+  action: ActionPayload<Record<string, any>>
+): StoreState => {
   let id;
   let data;
 
@@ -21,10 +27,11 @@ export const reducer: Reducer<StoreState, ActionPayload<any>> = (state: StoreSta
       data = Object.assign({}, state.data);
       id = nanoid(16);
 
-      data[id] = Object.assign({}, action.data, {
+      data[id] = {
+        ...action.data,
         createdAt: new Date().getTime(),
-        id
-      });
+        id: id
+      };
 
       return {
         ...state,

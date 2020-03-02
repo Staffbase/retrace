@@ -1,5 +1,5 @@
-const { menubar } = require('menubar');
-const { globalShortcut, ipcMain } = require('electron');
+const { menubar } = require("menubar");
+const { globalShortcut, ipcMain } = require("electron");
 
 const mb = menubar({
   index: `file://${process.cwd()}/build/index.html`,
@@ -14,54 +14,54 @@ const mb = menubar({
     }
   },
   preloadWindow: true,
-  windowPosition: 'trayRight',
-  tooltip: 'RE:Trace'
+  windowPosition: "trayRight",
+  tooltip: "RE:Trace"
 });
 
-const collapse = (skipEvent) => {
+const collapse = skipEvent => {
   if (!skipEvent) {
-    mb.window.webContents.send('window-collapse');
+    mb.window.webContents.send("window-collapse");
   }
 
   mb.window.setSize(500, 47);
 };
 
-const expand = (skipEvent) => {
+const expand = skipEvent => {
   if (!skipEvent) {
-    mb.window.webContents.send('window-expand');
+    mb.window.webContents.send("window-expand");
   }
 
   mb.window.setSize(500, 350);
 };
 
-mb.on('ready', () => {
-  globalShortcut.register('CommandOrControl+L', () => {
+mb.on("ready", () => {
+  globalShortcut.register("CommandOrControl+L", () => {
     // initiate smaller hotkey mode, collapsed and centered
     collapse();
-    mb.setOption('windowPosition', 'center');
+    mb.setOption("windowPosition", "center");
 
     mb.showWindow();
   });
 
-  mb.window.webContents.send('reset-calendar');
+  mb.window.webContents.send("reset-calendar");
 });
 
-mb.on('focus-lost', mb.hideWindow);
+mb.on("focus-lost", mb.hideWindow);
 
-mb.on('after-hide', () => {
+mb.on("after-hide", () => {
   // restore initial menu bar app position
-  mb.setOption('windowPosition', 'trayRight');
+  mb.setOption("windowPosition", "trayRight");
   expand();
 
-  mb.window.webContents.send('reset-calendar');
+  mb.window.webContents.send("reset-calendar");
 
   // restore focus to where it was before
-  mb.app.hide()
+  mb.app.hide();
 });
 
-ipcMain.on('close-window', () => {
+ipcMain.on("close-window", () => {
   mb.hideWindow();
 });
 
-ipcMain.on('window-collapse', collapse.bind(null, true));
-ipcMain.on('window-expand', expand.bind(null, true));
+ipcMain.on("window-collapse", collapse.bind(null, true));
+ipcMain.on("window-expand", expand.bind(null, true));

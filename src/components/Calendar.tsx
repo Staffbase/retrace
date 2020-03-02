@@ -1,24 +1,24 @@
-import React, {ReactElement, useCallback, MouseEvent} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {StoreState} from "../store/Types";
+import React, { ReactElement, MouseEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { StoreState } from "../store/Types";
 import styled from "styled-components";
-import {setFilter} from "../store/Actions";
+import { setFilter } from "../store/Actions";
 
 const DAYS = [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
 ];
 
-function getLastDayOfMonth (month: number) {
+function getLastDayOfMonth(month: number): number {
   const date = new Date();
   date.setMonth(month + 1);
   date.setDate(1);
-  date.setHours(0,0,0,0);
+  date.setHours(0, 0, 0, 0);
   return new Date(date.getTime() - 100).getDate();
 }
 
@@ -33,8 +33,10 @@ export default function Calendar(): ReactElement {
   const lastDayOfPreviousMonth = getLastDayOfMonth(now.getMonth() - 1);
   const lastDayOfNextMonth = getLastDayOfMonth(now.getMonth());
 
-  const onClick = (event: MouseEvent<HTMLDivElement>) => {
-    let selectedFrom: string | null = event.currentTarget.getAttribute('data-from');
+  const onClick = (event: MouseEvent<HTMLDivElement>): void => {
+    const selectedFrom: string | null = event.currentTarget.getAttribute(
+      "data-from"
+    );
 
     if (!selectedFrom) {
       return;
@@ -59,7 +61,7 @@ export default function Calendar(): ReactElement {
     } else if (date < 1) {
       // Overflow to previous month
       date = lastDayOfPreviousMonth + date;
-      itemDate.setMonth(itemDate.getMonth() - 1)
+      itemDate.setMonth(itemDate.getMonth() - 1);
     }
 
     // TODO: Fix overflow into last month
@@ -69,26 +71,20 @@ export default function Calendar(): ReactElement {
     return (
       <DayItem
         key={date}
-        className={idx === (dayOfTheWeek - 1) ? 'active' : ''}
+        className={idx === dayOfTheWeek - 1 ? "active" : ""}
         data-from={itemDate.getTime()}
         onClick={onClick}
       >
         <span>
           {date}
-          <small>
-            {DAYS[idx]}
-          </small>
+          <small>{DAYS[idx]}</small>
         </span>
       </DayItem>
     );
   });
 
-  return (
-    <CalendarWrapper>
-      {items}
-    </CalendarWrapper>
-  )
-};
+  return <CalendarWrapper>{items}</CalendarWrapper>;
+}
 
 const CalendarWrapper = styled.div`
   display: flex;
@@ -100,9 +96,9 @@ const DayItem = styled.div`
   flex: 1 0 calc(100% / 7);
   position: relative;
   cursor: pointer;
-  
+
   & > span {
-   display: inline-block;
+    display: inline-block;
     position: absolute;
     left: 0;
     right: 0;
@@ -112,23 +108,23 @@ const DayItem = styled.div`
     font-size: 25px;
     color: #ddd;
   }
-  
+
   & > span > small {
     display: block;
     font-size: 12px;
     margin-top: 3px;
   }
-  
+
   &.active {
     background-color: #444;
   }
-  
+
   &.active > span {
     color: #00a4fd;
   }
-  
-  &:after{
-    content: '';
+
+  &:after {
+    content: "";
     display: block;
     padding-bottom: 100%;
   }

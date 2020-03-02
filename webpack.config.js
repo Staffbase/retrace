@@ -1,26 +1,25 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  target: 'electron-renderer',
+  target: "electron-renderer",
   entry: {
-    app: ['./src/index.tsx'],
-    vendor: ['react', 'react-dom']
+    app: ["./src/index.tsx"],
+    vendor: ["react", "react-dom"]
   },
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'js/[name].js'
+    path: path.resolve(__dirname, "build"),
+    filename: "js/[name].js"
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   resolve: {
-    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx']
+    extensions: [".js", ".jsx", ".json", ".ts", ".tsx"]
   },
   module: {
     rules: [
       {
         test: /\.css$/,
-        loader: ['style-loader', 'css-loader']
+        loader: ["style-loader", "css-loader"]
       },
       {
         test: /\.png$/,
@@ -28,12 +27,14 @@ module.exports = {
       },
       {
         test: /\.(ts|tsx)$/,
-        loader: 'ts-loader'
+        loader: "ts-loader"
       },
       { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src/index.html') })
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, "src/index.html")
+    })
   ]
-}
+};
