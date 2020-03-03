@@ -5,6 +5,8 @@ import Form from "./components/Form";
 import styled from "styled-components";
 import { ipcRenderer } from "electron";
 import DetailView from "./components/DetailView";
+import Mousetrap from "mousetrap";
+import "mousetrap/plugins/global-bind/mousetrap-global-bind";
 
 const App = (): ReactElement => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);
@@ -20,6 +22,11 @@ const App = (): ReactElement => {
 
     ipcRenderer.on("window-expand", () => {
       setCollapsed(false);
+    });
+
+    // close window via ESC key
+    Mousetrap.bindGlobal('esc', () => {
+      ipcRenderer.send("close-window");
     });
   }, []);
 
