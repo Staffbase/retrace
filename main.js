@@ -1,6 +1,11 @@
 const { menubar } = require("menubar");
 const { globalShortcut, ipcMain, Menu } = require("electron");
 const path = require("path");
+const ElectronStore = require("electron-store");
+
+const config = new ElectronStore({
+  name: "config"
+});
 
 const mb = menubar({
   index: "file://" + path.resolve(__dirname, "build/index.html"),
@@ -45,11 +50,15 @@ const secondaryMenu = Menu.buildFromTemplate([
 ]);
 
 mb.on("ready", () => {
-  globalShortcut.register("CommandOrControl+L", () => {
+  if (!config.get("floatShortcut")) {
+    config.set("floatShortcut", "CommandOrControl+L");
+  }
+
+  globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
     collapse();
-    mb.setOption("windowPosition", "center");
 
+    mb.setOption("windowPosition", "center");
     mb.showWindow();
   });
 
