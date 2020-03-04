@@ -34,11 +34,11 @@ const List = (): ReactElement => {
             dangerouslySetInnerHTML={{
               __html: item.label
                 .replace(
-                  /#[a-zA-Z0-9]*/g,
+                  /#[a-zA-Z0-9-]+/g,
                   (str: string) => `<em class="hashtag">${str}</em>`
                 )
                 .replace(
-                  /@[a-zA-Z0-9]*/g,
+                  /@[a-zA-Z0-9-]+/g,
                   (str: string) => `<em class="mention">${str}</em>`
                 )
             }}
