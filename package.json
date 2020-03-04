@@ -9,12 +9,13 @@
   "homepage": "https://adfr.io",
   "license": "MIT",
   "scripts": {
+    "clean": "rm -rf out build",
     "build_web": "webpack",
-    "start": "yarn build_web && electron-forge start",
+    "start": "yarn clean && yarn build_web && electron-forge start",
     "lint": "eslint src/**/*.ts src/**/*.tsx ./*.js",
     "fix": "eslint src/**/*.ts src/**/*.tsx ./*.js --fix",
-    "package": "yarn build_web && electron-forge package",
-    "make": "yarn build_web && electron-forge make"
+    "package": "yarn clean && yarn build_web && electron-forge package",
+    "make": "yarn clean && yarn build_web && electron-forge make"
   },
   "dependencies": {
     "@types/styled-components": "^5.0.1",
