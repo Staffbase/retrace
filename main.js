@@ -2,9 +2,11 @@ const { menubar } = require("menubar");
 const { globalShortcut, ipcMain, Menu } = require("electron");
 const path = require("path");
 const ElectronStore = require("electron-store");
+const defaultConfig = require("./config.default.json");
 
 const config = new ElectronStore({
-  name: "config"
+  name: "config",
+  defaults: defaultConfig
 });
 
 const mb = menubar({
@@ -48,6 +50,11 @@ const secondaryMenu = Menu.buildFromTemplate([
     accelerator: "CommandOrControl+Q"
   }
 ]);
+
+mb.app.setLoginItemSettings({
+  openAtLogin: config.get("autostart") === true,
+  openAsHidden: true
+});
 
 mb.on("ready", () => {
   if (!config.get("floatShortcut")) {
