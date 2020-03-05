@@ -47,6 +47,7 @@ const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
         type="text"
         onChange={onChange}
         value={value}
+        placeholder={"What's on your mind?"}
       />
     </StyledForm>
   );

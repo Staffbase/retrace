@@ -10,7 +10,8 @@ const config = new ElectronStore({
 });
 
 const mb = menubar({
-  index: "file://" + path.resolve(__dirname, "build/index.html"),
+  //eslint-disable-next-line no-undef
+  index: MAIN_WINDOW_WEBPACK_ENTRY,
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
@@ -21,7 +22,7 @@ const mb = menubar({
       nodeIntegration: true
     }
   },
-  icon: path.resolve(__dirname, "assets/icon.png"),
+  icon: path.join(__dirname, "assets/icon_light@2x.png"),
   preloadWindow: true,
   windowPosition: "trayRight",
   tooltip: "RE:Trace"
@@ -51,10 +52,12 @@ const secondaryMenu = Menu.buildFromTemplate([
   }
 ]);
 
-mb.app.setLoginItemSettings({
-  openAtLogin: config.get("autostart") === true,
-  openAsHidden: true
-});
+if (mb.app.isPackaged) {
+  mb.app.setLoginItemSettings({
+    openAtLogin: config.get("autostart") === true,
+    openAsHidden: true
+  });
+}
 
 mb.on("ready", () => {
   if (!config.get("floatShortcut")) {

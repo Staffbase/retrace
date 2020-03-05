@@ -1,5 +1,5 @@
 import React, { ReactElement, useCallback, useState, useEffect } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import store from "./store/Store";
 import Form from "./components/Form";
 import styled from "styled-components";
@@ -7,6 +7,7 @@ import { ipcRenderer } from "electron";
 import DetailView from "./components/DetailView";
 import Mousetrap from "mousetrap";
 import "mousetrap/plugins/global-bind/mousetrap-global-bind";
+import icon from "./img/icon.png";
 
 const App = (): ReactElement => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);
@@ -25,7 +26,7 @@ const App = (): ReactElement => {
     });
 
     // close window via ESC key
-    Mousetrap.bindGlobal('esc', () => {
+    Mousetrap.bindGlobal("esc", () => {
       ipcRenderer.send("close-window");
     });
   }, []);
@@ -38,7 +39,9 @@ const App = (): ReactElement => {
     <Provider store={store}>
       <HBox>
         <Form closeAfterSubmit={isCollapsed} />
-        <StyledToggleButton onClick={toggleCollapsed} />
+        <StyledToggleButton onClick={toggleCollapsed}>
+          <img src={icon} width={20} height={20} alt="RE-Trace" />
+        </StyledToggleButton>
       </HBox>
 
       {!isCollapsed && <DetailView />}
@@ -56,10 +59,6 @@ const StyledToggleButton = styled.button`
   flex: 0 0 auto;
   appearance: none;
   background-color: transparent;
-  background-image: url("../assets/icon@2x.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20px 20px;
   color: #ccc;
   font-weight: bold;
   width: 47px;
