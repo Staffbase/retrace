@@ -15,7 +15,8 @@
     "lint": "eslint src/**/*.ts src/**/*.tsx ./*.js",
     "fix": "eslint src/**/*.ts src/**/*.tsx ./*.js --fix",
     "package": "yarn clean && yarn build_web && electron-forge package",
-    "make": "yarn clean && yarn build_web && electron-forge make"
+    "make": "yarn clean && yarn build_web && electron-forge make",
+    "publish": "yarn clean && yarn build_web && electron-forge publish"
   },
   "dependencies": {
     "@types/styled-components": "^5.0.1",
@@ -39,6 +40,7 @@
     "@electron-forge/maker-rpm": "6.0.0-beta.50",
     "@electron-forge/maker-squirrel": "6.0.0-beta.50",
     "@electron-forge/maker-zip": "6.0.0-beta.50",
+    "@electron-forge/publisher-github": "^6.0.0-beta.50",
     "@types/dompurify": "^2.0.1",
     "@types/lodash.throttle": "^4.1.6",
     "@types/mousetrap": "^1.6.3",
@@ -100,6 +102,18 @@
           "name": "@electron-forge/maker-dmg",
           "config": {
             "format": "ULFO"
+          }
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "ice8lue",
+              "name": "retrace"
+            },
+            "prerelease": true
           }
         }
       ]
