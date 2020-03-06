@@ -1,5 +1,7 @@
-<img src="assets/logo.png" style="display: block; width: 600px; margin:auto" />
-<img src="assets/screenshot.png" style="display: block; width: 600px; margin:auto" />
+<p align="center">
+  <img src="assets/logo.png" /><br />
+  <img src="assets/screenshot.png" />
+</p>
 
 RE-Trace makes journaling fast while staying out of your way. No cluttered UI, no long click paths to create your new entry. Just hit the shortcur (`CMD + L` on Mac, `Ctrl + L` on Windows and Linux), enter what's on your mind, hit `Enter` and you're done.
 
