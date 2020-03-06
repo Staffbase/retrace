@@ -4,6 +4,7 @@ node_modules/
 yarn-error.log
 .idea/
 .vscode
+.webpack
 
 .DS_Store
 *.iml

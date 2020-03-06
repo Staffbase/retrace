@@ -1,3 +1,35 @@
+:root {
+  --accentBlue: #00a4fd;
+  --accentRed: #fd4750;
+  --background: #eaeaea;
+  --backgroundLight: #f8f8f8;
+  --backgroundLighter: #fff;
+  --backgroundDark: #eaeaea;
+  --backgroundDarker: #ddd;
+  --border: #ccc;
+  --text: #333;
+  --textLight: #666;
+  --textDark: #999;
+  --textInput: #000;
+  --logo: url('./assets/iconDark.png');
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #222;
+    --backgroundLight: #333;
+    --backgroundLighter: #444;
+    --backgroundDark: #1a1a1a;
+    --backgroundDarker: #121212;
+    --border: #2a2a2a;
+    --text: #888;
+    --textLight: #ddd;
+    --textDark: #444;
+    --textInput: #fff;
+    --logo: url('./assets/icon.png');
+  }
+}
+
 * {
   box-sizing: border-box;
 }

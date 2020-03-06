@@ -7,7 +7,6 @@ import { ipcRenderer } from "electron";
 import DetailView from "./components/DetailView";
 import Mousetrap from "mousetrap";
 import "mousetrap/plugins/global-bind/mousetrap-global-bind";
-import icon from "./img/icon.png";
 
 const App = (): ReactElement => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);
@@ -39,9 +38,7 @@ const App = (): ReactElement => {
     <Provider store={store}>
       <HBox>
         <Form closeAfterSubmit={isCollapsed} />
-        <StyledToggleButton onClick={toggleCollapsed}>
-          <img src={icon} width={20} height={20} alt="RE-Trace" />
-        </StyledToggleButton>
+        <StyledToggleButton onClick={toggleCollapsed} />
       </HBox>
 
       {!isCollapsed && <DetailView />}
@@ -52,15 +49,17 @@ const App = (): ReactElement => {
 const HBox = styled.div`
   display: flex;
   flex-direction: row;
-  background-color: #1a1a1a;
+  background-color: var(--backgroundDark);
 `;
 
 const StyledToggleButton = styled.button`
   flex: 0 0 auto;
   appearance: none;
   background-color: transparent;
-  color: #ccc;
-  font-weight: bold;
+  background-size: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: var(--logo);
   width: 47px;
   border: none;
   outline: none;

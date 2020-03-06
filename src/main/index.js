@@ -3,11 +3,17 @@ const { globalShortcut, ipcMain, Menu } = require("electron");
 const path = require("path");
 const ElectronStore = require("electron-store");
 const defaultConfig = require("./config.default.json");
+const electron = require("electron");
 
 const config = new ElectronStore({
   name: "config",
   defaults: defaultConfig
 });
+
+const getIcon = () => {
+  const imgMode = electron.nativeTheme.shouldUseDarkColors ? "light" : "dark";
+  return path.join(__dirname, `assets/icon_${imgMode}.png`);
+};
 
 const mb = menubar({
   //eslint-disable-next-line no-undef
@@ -22,10 +28,14 @@ const mb = menubar({
       nodeIntegration: true
     }
   },
-  icon: path.join(__dirname, "assets/icon_light@2x.png"),
+  icon: getIcon(),
   preloadWindow: true,
   windowPosition: "trayRight",
   tooltip: "RE:Trace"
+});
+
+electron.nativeTheme.on("updated", () => {
+  mb.tray.setImage(getIcon());
 });
 
 const collapse = skipEvent => {

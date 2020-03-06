@@ -53,7 +53,7 @@ const List = (): ReactElement => {
 export default List;
 
 const StyledList = styled.ul`
-  background-color: #222;
+  background-color: var(--background);
   display: block;
   margin: 0;
   padding: 0;
@@ -63,13 +63,13 @@ const StyledList = styled.ul`
 
 const StyledListItem = styled.li`
   padding: 8px 15px;
-  color: #888;
-  border-bottom: 1px solid #2a2a2a;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: row;
 
   & > small {
-    color: #444;
+    color: var(--textDark);
     margin-right: 15px;
     flex: 0 0 auto;
     line-height: 26px;
@@ -85,10 +85,10 @@ const StyledListItem = styled.li`
   }
 
   & > label > em.hashtag {
-    color: #00a4fd;
+    color: var(--accentBlue);
   }
 
   & > label > em.mention {
-    color: #fd4750;
+    color: var(--accentRed);
   }
 `;

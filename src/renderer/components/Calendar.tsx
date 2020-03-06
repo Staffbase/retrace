@@ -89,7 +89,7 @@ export default function Calendar(): ReactElement {
 const CalendarWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  background-color: #333;
+  background-color: var(--backgroundLight);
 `;
 
 const DayItem = styled.div`
@@ -106,7 +106,7 @@ const DayItem = styled.div`
     transform: translateY(-50%);
     text-align: center;
     font-size: 25px;
-    color: #ddd;
+    color: var(--textLight);
   }
 
   & > span > small {
@@ -116,11 +116,11 @@ const DayItem = styled.div`
   }
 
   &.active {
-    background-color: #444;
+    background-color: var(--backgroundLighter);
   }
 
   &.active > span {
-    color: #00a4fd;
+    color: var(--accentBlue);
   }
 
   &:after {

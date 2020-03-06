@@ -65,12 +65,12 @@ const StyledInput = styled.input`
   font-size: 20px;
   padding: 12px 15px;
   background-color: transparent;
-  color: #fff;
+  color: var(--textInput);
   border-radius: 3px;
 
   &:active,
   &:focus {
-    background-color: #121212;
+    background-color: var(--backgroundDarker);
     outline: none;
   }
 `;

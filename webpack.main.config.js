@@ -32,7 +32,22 @@ module.exports = {
   },
   plugins: [
     new CopyPlugin([
-      "assets/IconTemplate*.png",
+      {
+        from: "src/main/assets/icon_dark.png",
+        to: "assets/icon_dark.png"
+      },
+      {
+        from: "src/main/assets/icon_dark@2x.png",
+        to: "assets/icon_dark@2x.png"
+      },
+      {
+        from: "src/main/assets/icon_light.png",
+        to: "assets/icon_light.png"
+      },
+      {
+        from: "src/main/assets/icon_light@2x.png",
+        to: "assets/icon_light@2x.png"
+      },
       {
         from: "src/main/config.default.json",
         to: "config.default.json"
