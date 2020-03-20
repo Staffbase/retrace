@@ -4595,10 +4595,10 @@ memory-fs@^0.5.0:
     errno "^0.1.3"
     readable-stream "^2.0.1"
 
-menubar@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/menubar/-/menubar-8.0.0.tgz#1ddb3d70b7012c64c740c3c18dd68fead7f0161e"
-  integrity sha512-bWVAjJoptjTQndk/3iwlsPy4odhaDGi3Pv4Ls583LP6Q4H6Y8ZMofq4lFJ4xeu15rOg8ZQ2PlUcpNN4YlpDQ9A==
+menubar@^8.0.1:
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/menubar/-/menubar-8.0.1.tgz#bbc945df6c8540772f656601b1f292be28cb6025"
+  integrity sha512-TbQMIhc+3g97RU2pd4LeXCA6oZKLDz9fxLu5d+iWugwT5AqZQudWEghMf3A/jL01a/37nuQUeiEnK3rQ2KN57A==
   dependencies:
     electron-positioner "^4.1.0"
 
