@@ -31,12 +31,12 @@ export function flatten(str: string): string {
 
 export function extractHashtags(str: string): string[] {
   return Array.from(str.match(HASHTAG_REGEX) || []).map(hashtag =>
-    hashtag.toLowerCase()
+    hashtag.toLowerCase().replace("#", "")
   );
 }
 
 export function extractMentions(str: string): string[] {
   return Array.from(str.match(MENTION_REGEX) || []).map(mention =>
-    mention.toLowerCase()
+    mention.toLowerCase().replace("@", "")
   );
 }
