@@ -22,8 +22,17 @@ import { default as ElectronStore } from "electron-store";
 import { ipcRenderer } from "electron";
 import { setFilter } from "./Actions";
 
+const config = new ElectronStore<{
+  autostart: boolean;
+  floatShortcut: string;
+  key: string[];
+}>({
+  name: "config"
+});
+
 const electronStore = new ElectronStore({
-  name: "database"
+  name: "database",
+  encryptionKey: config.get("key").join(" ")
 });
 
 const restoreState = (): StoreState => {

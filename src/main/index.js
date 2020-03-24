@@ -20,10 +20,14 @@ const path = require("path");
 const ElectronStore = require("electron-store");
 const defaultConfig = require("./config.default.json");
 const electron = require("electron");
+const niceware = require("niceware");
 
 const config = new ElectronStore({
   name: "config",
-  defaults: defaultConfig
+  defaults: {
+    ...defaultConfig,
+    key: niceware.generatePassphrase(8)
+  }
 });
 
 const getIcon = () => {
