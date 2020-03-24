@@ -18,6 +18,7 @@ import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { StoreState, Item } from "../store/Types";
 import styled from "styled-components";
+import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
 
 const lpad = (n: number): string => {
   return `${n < 10 ? "0" : ""}${n}`;
@@ -50,11 +51,11 @@ const List = (): ReactElement => {
             dangerouslySetInnerHTML={{
               __html: item.label
                 .replace(
-                  /#[a-zA-Z0-9-]+/g,
+                  HASHTAG_REGEX,
                   (str: string) => `<em class="hashtag">${str}</em>`
                 )
                 .replace(
-                  /@[a-zA-Z0-9-]+/g,
+                  MENTION_REGEX,
                   (str: string) => `<em class="mention">${str}</em>`
                 )
             }}

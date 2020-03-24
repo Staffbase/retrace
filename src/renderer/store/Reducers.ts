@@ -18,6 +18,7 @@ import { PartialItem, StoreState, DateFilter } from "./Types";
 import { ActionPayload, ActionTypes } from "./Actions";
 import { Reducer } from "redux";
 import nanoid from "nanoid";
+import { extractHashtags, extractMentions } from "../utils";
 
 const DEFAULT_STATE = {
   data: {},
@@ -46,7 +47,9 @@ export const reducer: Reducer<
       data[id] = {
         ...(action.data as PartialItem),
         createdAt: new Date().getTime(),
-        id: id
+        id: id,
+        hashtags: extractHashtags(action.data.label),
+        mentions: extractMentions(action.data.label)
       };
 
       return {
@@ -63,7 +66,11 @@ export const reducer: Reducer<
       }
 
       data = Object.assign({}, state.data);
-      data[id] = Object.assign({}, data[id], action.data);
+      data[id] = Object.assign({}, data[id], {
+        ...action.data,
+        hashtags: extractHashtags(action.data.label),
+        mentions: extractMentions(action.data.label)
+      });
 
       return {
         ...state,

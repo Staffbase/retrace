@@ -1,7 +1,6 @@
 {
   "parser":  "@typescript-eslint/parser",
   "parserOptions":  {
-    "ecmaVersion":  2018,
     "ecmaFeatures": {
       "jsx": true
     },
@@ -24,6 +23,8 @@
     "prettier/prettier": "error",
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
+    "prefer-const": "error",
+    "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0
   },
   "settings": {

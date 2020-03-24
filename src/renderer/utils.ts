@@ -16,6 +16,9 @@ limitations under the License.
 
 import DOMPurify from "dompurify";
 
+export const HASHTAG_REGEX = /#[a-zA-Z0-9-]+/g;
+export const MENTION_REGEX = /@[a-zA-Z0-9-]+/g;
+
 export function flatten(str: string): string {
   return DOMPurify.sanitize(str || "", {
     ALLOWED_TAGS: ["#text"],
@@ -24,4 +27,16 @@ export function flatten(str: string): string {
     ALLOWED_ATTR: [],
     ALLOW_DATA_ATTR: false
   });
+}
+
+export function extractHashtags(str: string): string[] {
+  return Array.from(str.match(HASHTAG_REGEX) || []).map(hashtag =>
+    hashtag.toLowerCase()
+  );
+}
+
+export function extractMentions(str: string): string[] {
+  return Array.from(str.match(MENTION_REGEX) || []).map(mention =>
+    mention.toLowerCase()
+  );
 }

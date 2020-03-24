@@ -14,24 +14,24 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-export interface PartialItem {
-  label: string;
-}
+import { extractHashtags, extractMentions } from "../utils";
+import { StoreState } from "./Types";
+import Conf from "conf";
 
-export interface Item extends PartialItem {
-  id: string;
-  createdAt: number;
-  hashtags: string[];
-  mentions: string[];
-}
+const Migrations = {
+  "1.0.0": (store: Conf<{ state: StoreState }>) => {
+    const state = store.get("state");
 
-export interface DateFilter {
-  from: number;
-  to: number;
-}
+    for (const id in state.data) {
+      state.data[id] = {
+        ...state.data[id],
+        hashtags: extractHashtags(state.data[id].label),
+        mentions: extractMentions(state.data[id].label)
+      };
+    }
 
-export interface StoreState {
-  data: Record<string, Item>;
-  total: number;
-  filter: DateFilter;
-}
+    store.set("state", state);
+  }
+};
+
+export default Migrations;

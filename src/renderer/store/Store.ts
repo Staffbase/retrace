@@ -21,9 +21,11 @@ import throttle from "lodash.throttle";
 import { default as ElectronStore } from "electron-store";
 import { ipcRenderer } from "electron";
 import { setFilter } from "./Actions";
+import Migrations from "./Migrations";
 
 const electronStore = new ElectronStore({
-  name: "database"
+  name: "database",
+  migrations: Migrations
 });
 
 const restoreState = (): StoreState => {
