@@ -28,7 +28,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
     "lodash.throttle": "^4.1.1",
-    "menubar": "^8.0.0",
+    "menubar": "^8.0.1",
     "mousetrap": "^1.6.5",
     "nanoid": "^2.1.11",
     "react": "^16.13.0",
