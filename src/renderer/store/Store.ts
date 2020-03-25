@@ -25,7 +25,9 @@ import Migrations from "./Migrations";
 
 const electronStore = new ElectronStore({
   name: "database",
-  migrations: Migrations
+  migrations: Migrations,
+  //@ts-ignore
+  projectVersion: VERSION,
 });
 
 const restoreState = (): StoreState => {

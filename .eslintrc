@@ -25,7 +25,8 @@
     "react/jsx-uses-vars": "error",
     "prefer-const": "error",
     "@typescript-eslint/no-explicit-any": 0,
-    "@typescript-eslint/no-var-requires": 0
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/ban-ts-ignore": 1
   },
   "settings": {
     "react": {
@@ -45,5 +46,8 @@
       "Hyperlink",
       {"name": "Link", "linkAttribute": "to"}
     ]
+  },
+  "globals": {
+    "VERSION": "readonly"
   }
 }
