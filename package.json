@@ -137,7 +137,7 @@
           "name": "@electron-forge/publisher-github",
           "config": {
             "repository": {
-              "owner": "ice8lue",
+              "owner": "Staffbase",
               "name": "retrace"
             },
             "prerelease": true
