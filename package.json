@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "description": "Minimal tool for end-of-day braindumps.",
   "main": "./.webpack/main",
-  "repository": "git@github.com:Staffbase/hackathon_shutdown.git",
-  "author": "Frank Adler <hi@adfr.io>",
-  "homepage": "https://adfr.io",
+  "repository": "git@github.com:Staffbase/retrace.git",
+  "author": "Frank Adler <frank.adler@staffbase.com>",
+  "homepage": "https://github.com/Staffbase/retrace",
   "license": "Apache-2.0",
   "licenses": [
     {
       "type": "Apache-2.0",
-      "url": "https://github.com/ice8lue/retrace/blob/master/LICENSE"
+      "url": "https://github.com/Staffbase/retrace/blob/master/LICENSE"
     }
   ],
   "scripts": {
