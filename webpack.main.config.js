@@ -17,6 +17,7 @@ limitations under the License.
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
+  mode: "development",
   target: "electron-main",
   entry: {
     main: ["./src/main/index.js"],
@@ -27,8 +28,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(ts)$/,
+        test: /\.tsx?$/,
         loader: "ts-loader",
+        exclude: /node_modules/,
       },
       {
         test: /\.node$/,
@@ -47,19 +49,21 @@ module.exports = {
     ],
   },
   plugins: [
-    new CopyPlugin([
-      {
-        from: "src/main/assets/iconTemplate.png",
-        to: "assets/iconTemplate.png",
-      },
-      {
-        from: "src/main/assets/iconTemplate@2x.png",
-        to: "assets/iconTemplate@2x.png",
-      },
-      {
-        from: "src/main/config.default.json",
-        to: "config.default.json",
-      },
-    ]),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: "src/main/assets/iconTemplate.png",
+          to: "assets/iconTemplate.png",
+        },
+        {
+          from: "src/main/assets/iconTemplate@2x.png",
+          to: "assets/iconTemplate@2x.png",
+        },
+        {
+          from: "src/main/config.default.json",
+          to: "config.default.json",
+        },
+      ],
+    }),
   ],
 };

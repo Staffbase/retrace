@@ -41,7 +41,7 @@ const electronStore = new ElectronStore({
       total: 0,
       filter: {
         from: defaultFilter[0],
-        to: defaultFilter[1]
+        to: defaultFilter[1],
       },
     },
   },

@@ -21,6 +21,7 @@ const webpack = require("webpack");
 const packageJSON = require("./package.json");
 
 module.exports = {
+  mode: "development",
   target: "electron-renderer",
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
@@ -29,15 +30,16 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        loader: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(png|jpg)$/,
-        loader: "url-loader",
+        type: "asset/resource",
       },
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         loader: "ts-loader",
+        exclude: /node_modules/,
       },
     ],
   },
@@ -45,9 +47,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "src/renderer/index.html"),
     }),
-    new CopyPlugin(["assets/icon*.png"]),
+    new CopyPlugin({
+      patterns: ["assets/icon.png"],
+    }),
     new webpack.DefinePlugin({
       VERSION: JSON.stringify(packageJSON.version),
     }),
   ],
+  optimization: {
+    splitChunks: { chunks: "all" },
+  },
 };
