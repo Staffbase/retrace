@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Mousetrap from "mousetrap";
 import { closeWindow } from "../App";
+import ListItemContextMenu from "./ListItemContextMenu";
 import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
 import { removeItem, updateItem } from "../store/Actions";
 import { Item } from "../store/Types";
@@ -21,6 +22,15 @@ export default function ListItem({ item }: Props) {
   const [label, setLabel] = useState(item.label);
   const created = new Date(item.createdAt);
 
+  const save = () => {
+    dispatch(updateItem({ ...item, label }));
+    setMode("view");
+  };
+
+  const deleteItem = () => {
+    dispatch(removeItem(item));
+  };
+
   useEffect(() => {
     if (mode === "edit") {
       Mousetrap.bindGlobal("esc", () => {
@@ -31,15 +41,6 @@ export default function ListItem({ item }: Props) {
       return () => Mousetrap.bindGlobal("esc", closeWindow);
     }
   }, [mode]);
-
-  const save = () => {
-    dispatch(updateItem({ ...item, label }));
-    setMode("view");
-  };
-
-  const deleteItem = () => {
-    dispatch(removeItem(item));
-  };
 
   return (
     <StyledListItem className="item" key={item.id} data-item-id={item.id}>
@@ -63,11 +64,18 @@ export default function ListItem({ item }: Props) {
             }}
           />
 
-          <button onClick={() => setMode("edit")}>Edit</button>
-          <button onClick={deleteItem}>X</button>
+          <ListItemContextMenu
+            onClick={(action) => {
+              if (action === "edit") {
+                setMode("edit");
+              } else if (action === "delete") {
+                deleteItem();
+              }
+            }}
+          />
         </>
       ) : (
-        <>
+        <form onSubmit={save}>
           <input
             type="text"
             value={label}
@@ -75,10 +83,10 @@ export default function ListItem({ item }: Props) {
             autoFocus={true}
           />
 
-          <button onClick={save} title="ESC to cancel">
+          <button type="submit" title="ESC to cancel">
             Save
           </button>
-        </>
+        </form>
       )}
     </StyledListItem>
   );
@@ -115,7 +123,13 @@ const StyledListItem = styled.li`
     color: var(--accentRed);
   }
 
-  > button {
+  > form {
+    display: flex;
+    flex: 1 1 auto;
+  }
+
+  > button,
+  > form > button {
     background: none;
     border: none;
     color: var(--accentBlue);
@@ -124,13 +138,13 @@ const StyledListItem = styled.li`
     line-height: 26px;
     outline: none;
     padding: 0;
+
+    &:hover {
+      color: var(darken(--accentBlue, 10%));
+    }
   }
 
-  > button:hover {
-    color: var(darken(--accentBlue, 10%));
-  }
-
-  > input {
+  > form > input {
     flex: 1 1 auto;
     background: none;
     border: none;
@@ -139,9 +153,9 @@ const StyledListItem = styled.li`
     line-height: 26px;
     outline: none;
     padding: 0;
-  }
 
-  > input:hover {
-    color: var(darken(--text, 10%));
+    &:hover {
+      color: var(darken(--text, 10%));
+    }
   }
 `;
