@@ -17,7 +17,7 @@ limitations under the License.
 import { PartialItem, StoreState, DateFilter } from "./Types";
 import { ActionPayload, ActionTypes } from "./Actions";
 import { Reducer } from "redux";
-import nanoid from "nanoid";
+import { nanoid } from "nanoid";
 import { extractHashtags, extractMentions } from "../utils";
 
 const DEFAULT_STATE = {
