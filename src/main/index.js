@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const { menubar } = require("menubar");
-const { globalShortcut, ipcMain, Menu } = require("electron");
-const path = require("path");
-const ElectronStore = require("electron-store");
-const defaultConfig = require("./config.default.json");
-const electron = require("electron");
+import { menubar } from "menubar";
+import { globalShortcut, ipcMain, Menu } from "electron";
+import { join } from "path";
+import ElectronStore from "electron-store";
+import defaultConfig from "./config.default.json";
+import electron, { nativeImage } from "electron";
 
 const config = new ElectronStore({
   name: "config",
@@ -27,12 +27,11 @@ const config = new ElectronStore({
 });
 
 const getIcon = () => {
-  const imgMode = electron.nativeTheme.shouldUseDarkColors ? "light" : "dark";
-  return path.join(__dirname, `assets/icon_${imgMode}.png`);
+  const path = join(__dirname, `assets/iconTemplate.png`);
+  return nativeImage.createFromPath(path);
 };
 
 const mb = menubar({
-  //eslint-disable-next-line no-undef
   index: MAIN_WINDOW_WEBPACK_ENTRY,
   browserWindow: {
     alwaysOnTop: true,
@@ -90,7 +89,7 @@ mb.on("ready", () => {
     config.set("floatShortcut", "CommandOrControl+L");
   }
 
-  //mb.window.webContents.openDevTools();
+  mb.window.webContents.openDevTools();
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
