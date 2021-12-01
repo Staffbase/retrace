@@ -31,7 +31,7 @@ const Migrations = {
     }
 
     store.set("state", state);
-  }
+  },
 };
 
 export default Migrations;

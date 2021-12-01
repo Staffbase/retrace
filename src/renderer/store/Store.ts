@@ -23,8 +23,28 @@ import { ipcRenderer } from "electron";
 import { setFilter } from "./Actions";
 import Migrations from "./Migrations";
 
+function getFilter(date: Date = new Date()) {
+  date.setHours(0, 0, 0, 0);
+  const from = date.getTime();
+  date.setHours(23, 59, 59, 99);
+  const to = date.getTime();
+  return [from, to];
+}
+
+const defaultFilter = getFilter();
+
 const electronStore = new ElectronStore({
   name: "database",
+  defaults: {
+    state: {
+      data: {},
+      total: 0,
+      filter: {
+        from: defaultFilter[0],
+        to: defaultFilter[1]
+      },
+    },
+  },
   migrations: Migrations,
   //@ts-ignore
   projectVersion: VERSION,
@@ -41,12 +61,7 @@ const saveState = (state: StoreState): void => {
 const store: Store = createStore(reducer, restoreState());
 
 ipcRenderer.on("reset-calendar", () => {
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
-  const from = now.getTime();
-  now.setHours(23, 59, 59, 99);
-  const to = now.getTime();
-
+  const [from, to] = getFilter();
   store.dispatch(setFilter(from, to));
 });
 

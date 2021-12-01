@@ -24,11 +24,13 @@
     "publish": "yarn clean && electron-forge publish"
   },
   "dependencies": {
+    "ajv": "^8.8.2",
+    "ajv-formats": "^2.1.1",
     "dompurify": "^2.0.17",
     "electron-squirrel-startup": "^1.0.0",
-    "electron-store": "^5.1.1",
+    "electron-store": "^8.0.1",
     "lodash.throttle": "^4.1.1",
-    "menubar": "^8.0.1",
+    "menubar": "^9.1.0",
     "mousetrap": "^1.6.5",
     "nanoid": "^2.1.11",
     "react": "^16.13.1",
