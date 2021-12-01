@@ -1,7 +1,7 @@
 {
   "name": "retrace",
   "productName": "RE-Trace",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.0",
   "description": "Minimal tool for end-of-day braindumps.",
   "main": "./.webpack/main",
   "repository": "git@github.com:Staffbase/retrace.git",
