@@ -23,7 +23,7 @@ const electron = require("electron");
 
 const config = new ElectronStore({
   name: "config",
-  defaults: defaultConfig
+  defaults: defaultConfig,
 });
 
 const getIcon = () => {
@@ -41,20 +41,20 @@ const mb = menubar({
     width: 500,
     height: 47,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   },
   icon: getIcon(),
   preloadWindow: true,
   windowPosition: "trayRight",
-  tooltip: "RE:Trace"
+  tooltip: "RE:Trace",
 });
 
 electron.nativeTheme.on("updated", () => {
   mb.tray.setImage(getIcon());
 });
 
-const collapse = skipEvent => {
+const collapse = (skipEvent) => {
   if (!skipEvent) {
     mb.window.webContents.send("window-collapse");
   }
@@ -62,7 +62,7 @@ const collapse = skipEvent => {
   mb.window.setSize(500, 47);
 };
 
-const expand = skipEvent => {
+const expand = (skipEvent) => {
   if (!skipEvent) {
     mb.window.webContents.send("window-expand");
   }
@@ -74,14 +74,14 @@ const secondaryMenu = Menu.buildFromTemplate([
   {
     label: "Quit",
     click: mb.app.quit,
-    accelerator: "CommandOrControl+Q"
-  }
+    accelerator: "CommandOrControl+Q",
+  },
 ]);
 
 if (mb.app.isPackaged) {
   mb.app.setLoginItemSettings({
     openAtLogin: config.get("autostart") === true,
-    openAsHidden: true
+    openAsHidden: true,
   });
 }
 

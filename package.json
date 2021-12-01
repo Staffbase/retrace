@@ -17,8 +17,8 @@
   "scripts": {
     "clean": "rm -rf out .webpack",
     "start": "yarn clean && electron-forge start",
-    "lint": "eslint src/**/*.ts src/**/*.tsx ./*.js",
-    "fix": "eslint src/**/*.ts src/**/*.tsx ./*.js --fix",
+    "lint": "eslint src/**/*.ts src/**/*.tsx src/**/*.js ./*.js",
+    "fix": "eslint src/**/*.ts src/**/*.tsx src/**/*.js ./*.js --fix",
     "package": "yarn clean && electron-forge package",
     "make": "yarn clean && electron-forge make",
     "publish": "yarn clean && electron-forge publish"

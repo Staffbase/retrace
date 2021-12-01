@@ -25,18 +25,18 @@ export function flatten(str: string): string {
     KEEP_CONTENT: true,
     FORBID_TAGS: ["script", "style"],
     ALLOWED_ATTR: [],
-    ALLOW_DATA_ATTR: false
+    ALLOW_DATA_ATTR: false,
   });
 }
 
 export function extractHashtags(str: string): string[] {
-  return Array.from(str.match(HASHTAG_REGEX) || []).map(hashtag =>
+  return Array.from(str.match(HASHTAG_REGEX) || []).map((hashtag) =>
     hashtag.toLowerCase().replace("#", "")
   );
 }
 
 export function extractMentions(str: string): string[] {
-  return Array.from(str.match(MENTION_REGEX) || []).map(mention =>
+  return Array.from(str.match(MENTION_REGEX) || []).map((mention) =>
     mention.toLowerCase().replace("@", "")
   );
 }
