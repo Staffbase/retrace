@@ -23,7 +23,10 @@ export default function ListItem({ item }: Props) {
 
   useEffect(() => {
     if (mode === "edit") {
-      Mousetrap.bindGlobal("esc", () => setMode("view"));
+      Mousetrap.bindGlobal("esc", () => {
+        setMode("view");
+        setLabel(item.label);
+      });
 
       return () => Mousetrap.bindGlobal("esc", closeWindow);
     }
@@ -64,9 +67,12 @@ export default function ListItem({ item }: Props) {
             type="text"
             value={label}
             onChange={(e) => setLabel(e.target.value)}
+            autoFocus={true}
           />
 
-          <button onClick={save}>Save</button>
+          <button onClick={save} title="ESC to cancel">
+            Save
+          </button>
         </>
       )}
     </StyledListItem>
@@ -102,5 +108,35 @@ const StyledListItem = styled.li`
 
   & > label > em.mention {
     color: var(--accentRed);
+  }
+
+  > button {
+    background: none;
+    border: none;
+    color: var(--accentBlue);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 26px;
+    outline: none;
+    padding: 0;
+  }
+
+  > button:hover {
+    color: var(darken(--accentBlue, 10%));
+  }
+
+  > input {
+    flex: 1 1 auto;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 16px;
+    line-height: 26px;
+    outline: none;
+    padding: 0;
+  }
+
+  > input:hover {
+    color: var(darken(--text, 10%));
   }
 `;
