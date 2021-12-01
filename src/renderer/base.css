@@ -27,7 +27,7 @@ limitations under the License.
   --textLight: #666;
   --textDark: #999;
   --textInput: #000;
-  --logo: url('./assets/iconDark.png');
+  --logo: url("./assets/iconDark.png");
 }
 
 @media (prefers-color-scheme: dark) {
@@ -42,7 +42,7 @@ limitations under the License.
     --textLight: #ddd;
     --textDark: #444;
     --textInput: #fff;
-    --logo: url('./assets/icon.png');
+    --logo: url("./assets/icon.png");
   }
 }
 
@@ -53,5 +53,6 @@ limitations under the License.
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }

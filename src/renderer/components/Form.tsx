@@ -19,7 +19,7 @@ import React, {
   useState,
   useCallback,
   KeyboardEvent,
-  ChangeEvent
+  ChangeEvent,
 } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../store/Actions";

@@ -57,7 +57,7 @@ const List = (): ReactElement => {
                 .replace(
                   MENTION_REGEX,
                   (str: string) => `<em class="mention">${str}</em>`
-                )
+                ),
             }}
           />
         </StyledListItem>

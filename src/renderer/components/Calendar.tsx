@@ -27,7 +27,7 @@ const DAYS = [
   "Thursday",
   "Friday",
   "Saturday",
-  "Sunday"
+  "Sunday",
 ];
 
 function getLastDayOfMonth(month: number): number {
