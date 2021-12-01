@@ -24,7 +24,7 @@
     "publish": "yarn clean && electron-forge publish"
   },
   "dependencies": {
-    "dompurify": "^2.0.8",
+    "dompurify": "^2.0.17",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^5.1.1",
     "lodash.throttle": "^4.1.1",
