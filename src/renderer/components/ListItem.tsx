@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Mousetrap from "mousetrap";
 import { closeWindow } from "../App";
 import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
-import { updateItem } from "../store/Actions";
+import { removeItem, updateItem } from "../store/Actions";
 import { Item } from "../store/Types";
 
 const lpad = (n: number): string => {
@@ -37,6 +37,10 @@ export default function ListItem({ item }: Props) {
     setMode("view");
   };
 
+  const deleteItem = () => {
+    dispatch(removeItem(item));
+  };
+
   return (
     <StyledListItem className="item" key={item.id} data-item-id={item.id}>
       <small>
@@ -60,6 +64,7 @@ export default function ListItem({ item }: Props) {
           />
 
           <button onClick={() => setMode("edit")}>Edit</button>
+          <button onClick={deleteItem}>X</button>
         </>
       ) : (
         <>
