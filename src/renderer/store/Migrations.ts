@@ -26,7 +26,7 @@ const Migrations = {
       state.data[id] = {
         ...state.data[id],
         hashtags: extractHashtags(state.data[id].label),
-        mentions: extractMentions(state.data[id].label)
+        mentions: extractMentions(state.data[id].label),
       };
     }
 

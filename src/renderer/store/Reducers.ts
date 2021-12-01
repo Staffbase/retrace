@@ -25,8 +25,8 @@ const DEFAULT_STATE = {
   total: 0,
   filter: {
     from: 0,
-    to: 0
-  }
+    to: 0,
+  },
 };
 
 export const reducer: Reducer<
@@ -49,13 +49,13 @@ export const reducer: Reducer<
         createdAt: new Date().getTime(),
         id: id,
         hashtags: extractHashtags(action.data.label),
-        mentions: extractMentions(action.data.label)
+        mentions: extractMentions(action.data.label),
       };
 
       return {
         ...state,
         data,
-        total: Object.keys(data).length
+        total: Object.keys(data).length,
       };
 
     case ActionTypes.UPDATE_ITEM:
@@ -69,12 +69,12 @@ export const reducer: Reducer<
       data[id] = Object.assign({}, data[id], {
         ...action.data,
         hashtags: extractHashtags(action.data.label),
-        mentions: extractMentions(action.data.label)
+        mentions: extractMentions(action.data.label),
       });
 
       return {
         ...state,
-        data
+        data,
       };
 
     case ActionTypes.REMOVE_ITEM:
@@ -89,7 +89,7 @@ export const reducer: Reducer<
 
       return {
         ...state,
-        data
+        data,
       };
 
     case ActionTypes.SET_FILTER:
@@ -99,7 +99,7 @@ export const reducer: Reducer<
 
       return {
         ...state,
-        filter: action.data as DateFilter
+        filter: action.data as DateFilter,
       };
 
     default:
