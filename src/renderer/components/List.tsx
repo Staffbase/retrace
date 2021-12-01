@@ -14,19 +14,29 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement } from "react";
-import { useSelector } from "react-redux";
+import React, { MouseEvent, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { StoreState, Item } from "../store/Types";
 import styled from "styled-components";
 import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
+import { removeItem } from "../store/Actions";
 
 const lpad = (n: number): string => {
   return `${n < 10 ? "0" : ""}${n}`;
 };
 
 const List = (): ReactElement => {
+  const dispatch = useDispatch();
   const data = useSelector((state: StoreState) => state.data);
   const filter = useSelector((state: StoreState) => state.filter);
+
+  const onClick = (event: MouseEvent<HTMLButtonElement>): void => {
+    const id = event.currentTarget.parentElement?.getAttribute("data-item-id");
+    if (id) {
+      const item = data[id];
+      dispatch(removeItem(item));
+    }
+  };
 
   const items = Object.values(data)
     .filter((item: Item) => {
@@ -60,6 +70,7 @@ const List = (): ReactElement => {
                 ),
             }}
           />
+          <button onClick={onClick}>X</button>
         </StyledListItem>
       );
     });
@@ -107,5 +118,31 @@ const StyledListItem = styled.li`
 
   & > label > em.mention {
     color: var(--accentRed);
+  }
+
+  & > button {
+    background-color: var(--background);
+    color: var(--text);
+    font-size: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    text-align: center;
+  }
+
+  & > button:hover {
+    background-color: var(--backgroundLighter);
+    color: var(--textLight);
+  }
+
+  & > button:focus {
+    background-color: var(--background);
+    color: var(--text);
+  }
+
+  & > button:active {
+    box-shadow: 0 5px pink;
+    transform: translateY(5px);
   }
 `;
