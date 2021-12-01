@@ -23,7 +23,8 @@
     "prefer-const": "error",
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/no-var-requires": 0,
-    "@typescript-eslint/ban-ts-ignore": 1
+    "@typescript-eslint/ban-ts-ignore": 1,
+    "@typescript-eslint/explicit-function-return-type": 0
   },
   "settings": {
     "react": {
@@ -45,6 +46,7 @@
     ]
   },
   "globals": {
-    "VERSION": "readonly"
+    "VERSION": "readonly",
+    "MAIN_WINDOW_WEBPACK_ENTRY": "readonly"
   }
 }
