@@ -15,11 +15,15 @@ limitations under the License.
 */
 
 import ElectronStore from "electron-store";
-import defaultConfig from "../../../config.default.json";
 
-const store = new ElectronStore({
+const defaultConfig = {
+  autostart: true,
+  floatShortcut: "CommandOrControl+L",
+};
+
+const config = new ElectronStore({
   name: "config",
   defaults: defaultConfig,
 });
 
-export default store;
+export default config;

@@ -56,10 +56,6 @@ module.exports = {
         from: "src/main/assets/iconTemplate@2x.png",
         to: "assets/iconTemplate@2x.png",
       },
-      {
-        from: "src/main/config.default.json",
-        to: "config.default.json",
-      },
     ]),
   ],
 };
