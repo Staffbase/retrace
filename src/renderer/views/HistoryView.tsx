@@ -18,10 +18,13 @@ import React from "react";
 import List from "../components/List";
 import Page from "../components/Page";
 import styled from "styled-components";
+import { useTranslation } from "../../i18n";
 
 export default function HistoryView() {
+  const { PAGES } = useTranslation();
+
   return (
-    <Page id="history" title="Logbook">
+    <Page id="history" title={PAGES.logbook}>
       <StyledListSection>
         <List showAll={true} />
       </StyledListSection>
