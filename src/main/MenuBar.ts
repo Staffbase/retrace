@@ -73,7 +73,11 @@ export default class MenuBar {
       this.menuBar?.tray.setImage(getIcon());
     });
 
-    this.menuBar.on("focus-lost", this.menuBar.hideWindow);
+    this.menuBar.on("focus-lost", () => {
+      if (!Object.keys(this.childWindows).length) {
+        this.menuBar?.hideWindow();
+      }
+    });
 
     this.menuBar.on("after-hide", () => {
       // restore initial menu bar app position
@@ -113,22 +117,30 @@ export default class MenuBar {
     });
   }
 
+  openHistory() {
+    this.openChildWindow("/history");
+  }
+
+  openSettings() {
+    this.openChildWindow("/settings", {
+      width: 400,
+      height: 250,
+      resizable: false,
+    });
+  }
+
   getSecondaryMenu() {
     const { PAGES } = getTranslation();
 
     return Menu.buildFromTemplate([
       {
         label: PAGES.history,
-        click: this.openChildWindow.bind(this, "/history"),
+        click: this.openHistory.bind(this),
         accelerator: "CommandOrControl+H",
       },
       {
         label: PAGES.settings,
-        click: this.openChildWindow.bind(this, "/settings", {
-          width: 400,
-          height: 250,
-          resizable: false,
-        }),
+        click: this.openSettings.bind(this),
         accelerator: "CommandOrControl+D",
       },
       {
@@ -185,7 +197,7 @@ export default class MenuBar {
       this.menuBar?.window?.webContents.send("window-expand");
     }
 
-    this.menuBar?.window?.setSize(500, 350);
+    this.menuBar?.window?.setSize(500, 375);
   };
 
   hide = () => {
