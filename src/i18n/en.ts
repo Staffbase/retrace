@@ -13,8 +13,10 @@ export const MAIN = {
 };
 
 export const PAGES = {
+  history: "History",
   settings: "Settings",
   logbook: "Logbook",
+  quit: "Quit",
 };
 
 export const PAGE_SETTINGS = {
