@@ -19,16 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../store/Types";
 import styled from "styled-components";
 import { setFilter } from "../store/Actions";
-
-const DAYS = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
-];
+import { useTranslation } from "../../i18n";
 
 function getLastDayOfMonth(month: number): number {
   const date = new Date();
@@ -48,11 +39,12 @@ function getDayOfTheWeek(today: Date): number {
   return dayOfTheWeek;
 }
 
-function getFirstDayOfTheWeek(today: number, dayOfTheWeek: number) : number{
+function getFirstDayOfTheWeek(today: number, dayOfTheWeek: number): number {
   return today - (dayOfTheWeek - 1);
 }
 
 export default function Calendar(): ReactElement {
+  const { DAYS } = useTranslation();
   const filter = useSelector((state: StoreState) => state.filter);
   const dispatch = useDispatch();
 
@@ -104,7 +96,7 @@ export default function Calendar(): ReactElement {
       >
         <span>
           {date}
-          <small>{DAYS[idx]}</small>
+          <small>{DAYS[Object.keys(DAYS)[idx] as keyof typeof DAYS]}</small>
         </span>
       </DayItem>
     );

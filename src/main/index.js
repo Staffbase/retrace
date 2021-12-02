@@ -31,7 +31,7 @@ const webPreferences = {
   devTools: process.env.NODE_ENV !== "production",
 };
 
-const mb = menubar({
+const menuBar = menubar({
   index: MAIN_WINDOW_WEBPACK_ENTRY,
   browserWindow: {
     alwaysOnTop: true,
@@ -66,7 +66,7 @@ function openChildWindow(path, options = {}) {
       resizable: true,
       show: false,
       webPreferences,
-      parent: mb.window,
+      parent: menuBar.window,
       ...options,
     });
 
@@ -76,7 +76,7 @@ function openChildWindow(path, options = {}) {
 
     win.on("closed", () => {
       delete childWindows[path];
-      mb.window.hide();
+      menuBar.window.hide();
     });
 
     childWindows[path] = win;
@@ -84,23 +84,23 @@ function openChildWindow(path, options = {}) {
 }
 
 electron.nativeTheme.on("updated", () => {
-  mb.tray.setImage(getIcon());
+  menuBar.tray.setImage(getIcon());
 });
 
 const collapse = (skipEvent) => {
   if (!skipEvent) {
-    mb.window.webContents.send("window-collapse");
+    menuBar.window.webContents.send("window-collapse");
   }
 
-  mb.window.setSize(500, 47);
+  menuBar.window.setSize(500, 47);
 };
 
 const expand = (skipEvent) => {
   if (!skipEvent) {
-    mb.window.webContents.send("window-expand");
+    menuBar.window.webContents.send("window-expand");
   }
 
-  mb.window.setSize(500, 350);
+  menuBar.window.setSize(500, 350);
 };
 
 const secondaryMenu = Menu.buildFromTemplate([
@@ -120,53 +120,56 @@ const secondaryMenu = Menu.buildFromTemplate([
   },
   {
     label: "Quit",
-    click: mb.app.quit,
+    click: menuBar.app.quit,
     accelerator: "CommandOrControl+Q",
   },
 ]);
 
-if (mb.app.isPackaged) {
-  mb.app.setLoginItemSettings({
+if (menuBar.app.isPackaged) {
+  menuBar.app.setLoginItemSettings({
     openAtLogin: config.get("autostart") === true,
     openAsHidden: true,
   });
 }
 
-mb.on("ready", () => {
+menuBar.on("ready", () => {
   if (!config.get("floatShortcut")) {
     config.set("floatShortcut", "CommandOrControl+L");
   }
+
+  config.set("locale", menuBar.app.getLocale());
+  menuBar.window.webContents.openDevTools();
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
     collapse();
 
-    mb.setOption("windowPosition", "center");
-    mb.showWindow();
+    menuBar.setOption("windowPosition", "center");
+    menuBar.showWindow();
   });
 
-  mb.tray.on("right-click", () => {
-    mb.tray.popUpContextMenu(secondaryMenu);
+  menuBar.tray.on("right-click", () => {
+    menuBar.tray.popUpContextMenu(secondaryMenu);
   });
 
-  mb.window.webContents.send("reset-calendar");
+  menuBar.window.webContents.send("reset-calendar");
 });
 
-mb.on("focus-lost", mb.hideWindow);
+menuBar.on("focus-lost", menuBar.hideWindow);
 
-mb.on("after-hide", () => {
+menuBar.on("after-hide", () => {
   // restore initial menu bar app position
-  mb.setOption("windowPosition", "trayRight");
+  menuBar.setOption("windowPosition", "trayRight");
   expand();
 
-  mb.window.webContents.send("reset-calendar");
+  menuBar.window.webContents.send("reset-calendar");
 
   // restore focus to where it was before
-  mb.app.hide();
+  menuBar.app.hide();
 });
 
 ipcMain.on("close-window", () => {
-  mb.hideWindow();
+  menuBar.hideWindow();
 });
 
 ipcMain.on("window-collapse", collapse.bind(null, true));
