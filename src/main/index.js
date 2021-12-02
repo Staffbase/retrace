@@ -76,7 +76,7 @@ function openChildWindow(path, options = {}) {
 
     win.on("closed", () => {
       delete childWindows[path];
-      mb.window.hide();
+      menuBar.window.hide();
     });
 
     childWindows[path] = win;
