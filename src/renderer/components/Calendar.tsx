@@ -38,25 +38,34 @@ function getLastDayOfMonth(month: number): number {
   return new Date(date.getTime() - 100).getDate();
 }
 
+function getDayOfTheWeek(today: Date): number {
+  let dayOfTheWeek = today.getDay();
+
+  if (dayOfTheWeek === 0) {
+    dayOfTheWeek = 7;
+  }
+
+  return dayOfTheWeek;
+}
+
+function getFirstDayOfTheWeek(today: number, dayOfTheWeek: number) : number{
+  return today - (dayOfTheWeek - 1);
+}
+
 export default function Calendar(): ReactElement {
   const filter = useSelector((state: StoreState) => state.filter);
   const dispatch = useDispatch();
 
   const now = new Date(filter.from);
   const today = now.getDate();
-  let dayOfTheWeek = now.getDay();
-  if (dayOfTheWeek === 0) {
-    dayOfTheWeek = 7;
-  }
-
-  const firstDayOfTheWeek = today - (dayOfTheWeek - 1);
+  const dayOfTheWeek = getDayOfTheWeek(now);
+  const firstDayOfTheWeek = getFirstDayOfTheWeek(today, dayOfTheWeek);
   const lastDayOfPreviousMonth = getLastDayOfMonth(now.getMonth() - 1);
   const lastDayOfThisMonth = getLastDayOfMonth(now.getMonth());
 
   const onClick = (event: MouseEvent<HTMLDivElement>): void => {
-    const selectedFrom: string | null = event.currentTarget.getAttribute(
-      "data-from"
-    );
+    const selectedFrom: string | null =
+      event.currentTarget.getAttribute("data-from");
 
     if (!selectedFrom) {
       return;
