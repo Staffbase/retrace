@@ -24,6 +24,7 @@
     "publish": "yarn clean && electron-forge publish"
   },
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "ajv": "^8.8.2",
     "ajv-formats": "^2.1.1",
     "dompurify": "^2.0.17",

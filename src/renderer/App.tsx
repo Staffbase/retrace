@@ -24,6 +24,10 @@ import DetailView from "./components/DetailView";
 import Mousetrap from "mousetrap";
 import "mousetrap/plugins/global-bind/mousetrap-global-bind";
 
+export function closeWindow() {
+  ipcRenderer.send("close-window");
+}
+
 const App = (): ReactElement => {
   const [isCollapsed, setCollapsed] = useState<boolean>(false);
 
@@ -42,7 +46,7 @@ const App = (): ReactElement => {
 
     // close window via ESC key
     Mousetrap.bindGlobal("esc", () => {
-      ipcRenderer.send("close-window");
+      closeWindow();
     });
   }, []);
 

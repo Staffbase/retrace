@@ -89,7 +89,7 @@ mb.on("ready", () => {
     config.set("floatShortcut", "CommandOrControl+L");
   }
 
-  mb.window.webContents.openDevTools();
+  // mb.window.webContents.openDevTools();
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
