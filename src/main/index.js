@@ -17,14 +17,8 @@ limitations under the License.
 import { menubar } from "menubar";
 import { globalShortcut, ipcMain, Menu } from "electron";
 import { join } from "path";
-import ElectronStore from "electron-store";
-import defaultConfig from "./config.default.json";
 import electron, { nativeImage, BrowserWindow } from "electron";
-
-const config = new ElectronStore({
-  name: "config",
-  defaults: defaultConfig,
-});
+import config from "../renderer/store/ConfigStore";
 
 const getIcon = () => {
   const path = join(__dirname, `assets/iconTemplate.png`);
@@ -55,7 +49,7 @@ const mb = menubar({
 
 const childWindows = {};
 
-function openChildWindow(path) {
+function openChildWindow(path, options = {}) {
   let win = childWindows[path];
 
   if (win) {
@@ -72,6 +66,8 @@ function openChildWindow(path) {
       resizable: true,
       show: false,
       webPreferences,
+      parent: mb.window,
+      ...options,
     });
 
     win.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
@@ -111,6 +107,15 @@ const secondaryMenu = Menu.buildFromTemplate([
     label: "History",
     click: openChildWindow.bind(null, "/history"),
     accelerator: "CommandOrControl+H",
+  },
+  {
+    label: "Settings",
+    click: openChildWindow.bind(null, "/settings", {
+      width: 400,
+      height: 250,
+      resizable: false,
+    }),
+    accelerator: "CommandOrControl+D",
   },
   {
     label: "Quit",

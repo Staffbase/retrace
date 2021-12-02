@@ -23,7 +23,6 @@ import { ipcRenderer } from "electron";
 import { setFilter } from "./Actions";
 import Migrations from "./Migrations";
 
-
 function getFilter(date: Date = new Date()) {
   date.setHours(0, 0, 0, 0);
   const from = date.getTime();
