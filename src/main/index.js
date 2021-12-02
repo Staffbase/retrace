@@ -49,6 +49,12 @@ const mb = menubar({
 
 const childWindows = {};
 
+function openDevTools(win) {
+  if (webPreferences.devTools) {
+    win.webContents.openDevTools();
+  }
+}
+
 function openChildWindow(path, options = {}) {
   let win = childWindows[path];
 
@@ -72,6 +78,7 @@ function openChildWindow(path, options = {}) {
 
     win.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
       win.show();
+      openDevTools(win);
     });
 
     win.on("closed", () => {
@@ -135,6 +142,8 @@ mb.on("ready", () => {
   if (!config.get("floatShortcut")) {
     config.set("floatShortcut", "CommandOrControl+L");
   }
+
+  openDevTools(mb.window);
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
