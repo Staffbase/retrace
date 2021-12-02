@@ -138,7 +138,6 @@ menuBar.on("ready", () => {
   }
 
   config.set("locale", menuBar.app.getLocale());
-  menuBar.window.webContents.openDevTools();
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
