@@ -15,8 +15,10 @@ export const MAIN: typeof en.MAIN = {
 };
 
 export const PAGES: typeof en.PAGES = {
+  history: "Historie",
   settings: "Eigenschaften",
   logbook: "Historie",
+  quit: "Beenden",
 };
 
 export const PAGE_SETTINGS: typeof en.PAGE_SETTINGS = {
