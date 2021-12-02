@@ -16,7 +16,7 @@ limitations under the License.
 
 import Form from "../components/Form";
 import DetailView from "../components/DetailView";
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ipcRenderer } from "electron";
 import Mousetrap from "mousetrap";
