@@ -24,11 +24,15 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import MainView from "./views/MainView";
 import HistoryView from "./views/HistoryView";
 
+export function closeWindow() {
+  ipcRenderer.send("close-window");
+}
+
 const App = (): ReactElement => {
   useEffect(() => {
     // close window via ESC key
     Mousetrap.bindGlobal("esc", () => {
-      ipcRenderer.send("close-window");
+      closeWindow();
     });
   }, []);
 

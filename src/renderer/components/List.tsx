@@ -16,14 +16,10 @@ limitations under the License.
 
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
-import { StoreState, Item } from "../store/Types";
 import styled from "styled-components";
-import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
 import { format } from "date-fns";
-
-const lpad = (n: number): string => {
-  return `${n < 10 ? "0" : ""}${n}`;
-};
+import { StoreState, Item } from "../store/Types";
+import ListItem, { StyledListItem } from "./ListItem";
 
 const List = ({ showAll }: { showAll: boolean }): ReactElement => {
   const data = useSelector((state: StoreState) => state.data);
@@ -54,36 +50,14 @@ const List = ({ showAll }: { showAll: boolean }): ReactElement => {
 
   const days = Object.entries(bucketsByDay).map(([id, items]) => {
     const entries = items.map((item: Item) => {
-      const created = new Date(item.createdAt);
-
-      return (
-        <StyledListItem className="item" key={item.id} data-item-id={item.id}>
-          <small>
-            {lpad(created.getHours()) + ":" + lpad(created.getMinutes())}
-          </small>
-          <label
-            dangerouslySetInnerHTML={{
-              __html: item.label
-                .replace(
-                  HASHTAG_REGEX,
-                  (str: string) => `<em class="hashtag">${str}</em>`
-                )
-                .replace(
-                  MENTION_REGEX,
-                  (str: string) => `<em class="mention">${str}</em>`
-                ),
-            }}
-          />
-        </StyledListItem>
-      );
+      return <ListItem item={item} key={item.id} />;
     });
-    const day = new Date(id);
 
     return (
       <div className="day" key={id}>
         {showAll && (
           <StyledListItem className="day-header">
-            {format(day, "PPPP")}
+            {format(new Date(id), "PPPP")}
           </StyledListItem>
         )}
         {entries}
@@ -107,41 +81,5 @@ const StyledList = styled.ul`
   .page.history & {
     height: auto;
     min-height: 100vh;
-  }
-`;
-
-const StyledListItem = styled.li`
-  padding: 8px 15px;
-  color: var(--text);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  flex-direction: row;
-
-  &.day-header {
-    font-weight: 600;
-  }
-
-  & > small {
-    color: var(--textDark);
-    margin-right: 15px;
-    flex: 0 0 auto;
-    line-height: 26px;
-  }
-
-  & > label {
-    flex: 1 1 auto;
-    line-height: 26px;
-  }
-
-  & > label > em {
-    font-style: normal;
-  }
-
-  & > label > em.hashtag {
-    color: var(--accentBlue);
-  }
-
-  & > label > em.mention {
-    color: var(--accentRed);
   }
 `;

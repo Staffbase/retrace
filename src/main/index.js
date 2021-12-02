@@ -42,7 +42,7 @@ const mb = menubar({
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
-    transparent: true,
+    transparent: false,
     width: process.env.NODE_ENV === "production" ? 500 : 1000,
     height: 47,
     webPreferences,
@@ -129,10 +129,6 @@ if (mb.app.isPackaged) {
 mb.on("ready", () => {
   if (!config.get("floatShortcut")) {
     config.set("floatShortcut", "CommandOrControl+L");
-  }
-
-  if (!process.env.NODE_ENV === "production") {
-    mb.window.webContents.openDevTools();
   }
 
   globalShortcut.register(config.get("floatShortcut"), () => {
