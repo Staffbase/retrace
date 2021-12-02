@@ -27,7 +27,7 @@ export default function ListItemContextMenu(props: Props) {
         </StyledMenu>
       }
     >
-      <button>Menu</button>
+      <StyledActionButton>⋮</StyledActionButton>
     </Tippy>
   );
 }
@@ -59,4 +59,8 @@ const StyledMenu = styled.div`
       margin-bottom: 3px;
     }
   }
+`;
+
+const StyledActionButton = styled.button`
+  padding: 0 6px;
 `;
