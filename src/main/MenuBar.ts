@@ -39,10 +39,12 @@ export default class MenuBar {
   menuBar: Menubar | undefined;
   childWindows: { [key: string]: BrowserWindow } = {};
   index: string;
+  currentFloatShortcut: string;
   ready: Promise<void>;
 
   constructor(index: string) {
     this.index = index;
+    this.currentFloatShortcut = config.get("floatShortcut");
 
     this.menuBar = menubar({
       index,
@@ -59,6 +61,8 @@ export default class MenuBar {
       windowPosition: "trayRight",
       tooltip: "RE-Trace",
     });
+
+    this.registerAutoStart(config.get("autostart"));
 
     electron.nativeTheme.on("updated", () => {
       this.menuBar?.tray.setImage(getIcon());
@@ -84,7 +88,7 @@ export default class MenuBar {
             config.set("floatShortcut", "CommandOrControl+L");
           }
 
-          this.registerFloatShortcut();
+          this.registerFloatShortcut(config.get("floatShortcut"));
 
           this.menuBar?.tray.on("right-click", () => {
             this.menuBar?.tray.popUpContextMenu(this.getSecondaryMenu());
@@ -104,15 +108,16 @@ export default class MenuBar {
     return Menu.buildFromTemplate([
       {
         label: "History",
-        click: this.openChildWindow.bind(null, "/history"),
+        click: this.openChildWindow.bind(this, "/history"),
         accelerator: "CommandOrControl+H",
       },
       {
         label: "Settings",
-        click: this.openChildWindow.bind(null, "/settings", {
+        click: this.openChildWindow.bind(this, "/settings", {
           width: 400,
           height: 250,
           resizable: false,
+          modal: true,
         }),
         accelerator: "CommandOrControl+D",
       },
@@ -173,17 +178,21 @@ export default class MenuBar {
     this.menuBar?.window?.setSize(500, 350);
   };
 
-  registerAutoStart() {
+  registerAutoStart(value: boolean) {
     if (this.menuBar?.app.isPackaged) {
       this.menuBar?.app.setLoginItemSettings({
-        openAtLogin: config.get("autostart") === true,
+        openAtLogin: value === true,
         openAsHidden: true,
       });
     }
   }
 
-  registerFloatShortcut() {
-    globalShortcut.register(config.get("floatShortcut"), () => {
+  registerFloatShortcut(value: string) {
+    globalShortcut.unregister(this.currentFloatShortcut);
+
+    this.currentFloatShortcut = value;
+
+    globalShortcut.register(this.currentFloatShortcut, () => {
       // initiate smaller hotkey mode, collapsed and centered
       this.collapse();
 

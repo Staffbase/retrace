@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import React, { useEffect, useState } from "react";
+import { ipcRenderer } from "electron";
 import styled from "styled-components";
 import config from "../store/ConfigStore";
 import Page from "../components/Page";
@@ -25,10 +26,12 @@ export default function SettingsView() {
 
   useEffect(() => {
     config.set("floatShortcut", shortcut);
+    ipcRenderer.send("floatShortcut-changed", shortcut);
   }, [shortcut]);
 
   useEffect(() => {
     config.set("autostart", autostart);
+    ipcRenderer.send("autostart-changed", autostart);
   }, [autostart]);
 
   return (
