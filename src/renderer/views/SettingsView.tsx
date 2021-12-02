@@ -17,6 +17,7 @@ limitations under the License.
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import config from "../store/ConfigStore";
+import Page from "../components/Page";
 
 export default function SettingsView() {
   const [autostart, setAutostart] = useState(config.get("autostart"));
@@ -31,12 +32,10 @@ export default function SettingsView() {
   }, [autostart]);
 
   return (
-    <StyledSettings className="page settings">
-      <h3>Re:Trace Settings</h3>
-
-      <section>
+    <Page id="settings" title="Settings">
+      <StyledSettings>
         <div>
-          <label htmlFor="autostart">Register in system autostart?</label>
+          <label htmlFor="autostart">Start with system</label>
           <input
             id="autostart"
             type="checkbox"
@@ -46,7 +45,7 @@ export default function SettingsView() {
         </div>
 
         <div className="vertical">
-          <label htmlFor="shortcut">Shortcut to open Re:Trace</label>
+          <label htmlFor="shortcut">Opening shortcut</label>
           <input
             id="shortcut"
             type="text"
@@ -54,51 +53,40 @@ export default function SettingsView() {
             onChange={(e) => setShortcut(e.target.value)}
           />
         </div>
-      </section>
-    </StyledSettings>
+      </StyledSettings>
+    </Page>
   );
 }
 
 const StyledSettings = styled.div`
-  padding: 15px;
-  background-color: var(--background);
-  height: auto;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 
-  > h3 {
-    margin: 0;
-  }
-
-  > section {
+  > div {
     display: flex;
-    flex-direction: column;
+    margin-top: 15px;
 
-    > div {
+    &.vertical {
+      flex-direction: column;
+    }
+
+    > label {
       display: flex;
-      margin-top: 15px;
+      flex: 1 1 auto;
+      color: var(--text);
+    }
 
-      &.vertical {
-        flex-direction: column;
-      }
-
-      > label {
-        display: flex;
-        flex: 1 1 auto;
-        color: var(--text);
-      }
-
-      > input[type="text"] {
-        display: block;
-        border: none;
-        font-size: 16px;
-        margin-top: 5px;
-        padding: 8px 10px;
-        background-color: var(--backgroundLight);
-        color: var(--textInput);
-        border: 1px solid var(--backgroundDarker);
-        border-radius: 3px;
-        outline: none;
-      }
+    > input[type="text"] {
+      display: block;
+      border: none;
+      font-size: 16px;
+      margin-top: 5px;
+      padding: 8px 10px;
+      background-color: var(--backgroundLight);
+      color: var(--textInput);
+      border: 1px solid var(--backgroundDarker);
+      border-radius: 3px;
+      outline: none;
     }
   }
 `;
