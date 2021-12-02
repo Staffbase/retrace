@@ -19,6 +19,7 @@ import ElectronStore from "electron-store";
 const defaultConfig = {
   autostart: true,
   floatShortcut: "CommandOrControl+L",
+  locale: "en",
 };
 
 const config = new ElectronStore({

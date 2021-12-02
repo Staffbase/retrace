@@ -64,6 +64,8 @@ export default class MenuBar {
 
     this.registerAutoStart(config.get("autostart"));
 
+    config.set("locale", this.menuBar.app.getLocale());
+
     electron.nativeTheme.on("updated", () => {
       this.menuBar?.tray.setImage(getIcon());
     });

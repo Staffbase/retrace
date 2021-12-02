@@ -2,12 +2,15 @@ import React from "react";
 import Tippy from "@tippyjs/react";
 import styled from "styled-components";
 import "tippy.js/dist/svg-arrow.css";
+import { useTranslation } from "../../i18n";
 
 interface Props {
   onClick: (action: "edit" | "delete") => void;
 }
 
 export default function ListItemContextMenu(props: Props) {
+  const { ACTIONS } = useTranslation();
+
   const edit = () => {
     props.onClick("edit");
   };
@@ -22,8 +25,8 @@ export default function ListItemContextMenu(props: Props) {
       placement="bottom"
       content={
         <StyledMenu>
-          <button onClick={edit}>Edit</button>
-          <button onClick={remove}>Remove</button>
+          <button onClick={edit}>{ACTIONS.edit}</button>
+          <button onClick={remove}>{ACTIONS.remove}</button>
         </StyledMenu>
       }
     >
