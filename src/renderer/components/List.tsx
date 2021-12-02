@@ -27,7 +27,15 @@ const List = ({ showAll }: { showAll: boolean }): ReactElement => {
 
   const bucketsByDay: Record<string, Item[]> = {};
 
-  const items = Object.values(data)
+  const compareByCreated = (item1: Item, item2: Item): number => {
+    if (item1.createdAt === item2.createdAt) {
+      return 0;
+    }
+
+    return item1.createdAt > item2.createdAt ? -1 : 1;
+  };
+
+  Object.values(data)
     .filter((item: Item) => {
       if (showAll) {
         return true;
@@ -35,13 +43,7 @@ const List = ({ showAll }: { showAll: boolean }): ReactElement => {
 
       return item.createdAt >= filter.from && item.createdAt <= filter.to;
     })
-    .sort((itemA: Item, itemB: Item) => {
-      return itemA.createdAt === itemB.createdAt
-        ? 0
-        : itemA.createdAt > itemB.createdAt
-        ? -1
-        : 1;
-    })
+    .sort((itemA: Item, itemB: Item) => compareByCreated(itemA, itemB))
     .forEach((item: Item) => {
       const created = new Date(item.createdAt);
       const id = format(created, "yyyy-MM-dd");
