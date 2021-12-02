@@ -49,6 +49,7 @@ export default function SettingsView() {
           <label htmlFor="shortcut">Shortcut to open Re:Trace</label>
           <input
             id="shortcut"
+            contentEditable={true}
             type="text"
             value={shortcut}
             onChange={(e) => setShortcut(e.target.value)}
