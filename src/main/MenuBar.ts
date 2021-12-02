@@ -180,6 +180,10 @@ export default class MenuBar {
     this.menuBar?.window?.setSize(500, 350);
   };
 
+  hide = () => {
+    this.menuBar?.hideWindow();
+  };
+
   registerAutoStart(value: boolean) {
     if (this.menuBar?.app.isPackaged) {
       this.menuBar?.app.setLoginItemSettings({

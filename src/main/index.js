@@ -19,12 +19,12 @@ import MenuBar from "./MenuBar";
 
 const menuBar = new MenuBar(MAIN_WINDOW_WEBPACK_ENTRY);
 
-ipcMain.on("close-window", () => menuBar.hideWindow());
-ipcMain.on("window-collapse", menuBar.collapse.bind(null, true));
-ipcMain.on("window-expand", menuBar.expand.bind(null, true));
+ipcMain.on("close-window", menuBar.hide.bind(menuBar));
+ipcMain.on("window-collapse", menuBar.collapse.bind(menuBar, true));
+ipcMain.on("window-expand", menuBar.expand.bind(menuBar, true));
 ipcMain.on("autostart-changed", (_, autostart) =>
-  menuBar.registerAutoStart.call(menuBar, autostart)
+  menuBar.registerAutoStart(autostart)
 );
 ipcMain.on("floatShortcut-changed", (_, shortcut) =>
-  menuBar.registerFloatShortcut.call(menuBar, shortcut)
+  menuBar.registerFloatShortcut(shortcut)
 );
