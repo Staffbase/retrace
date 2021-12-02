@@ -1,7 +1,7 @@
 {
-  "name": "retrace",
+  "name": "re-trace",
   "productName": "RE-Trace",
-  "version": "1.0.0",
+  "version": "1.0.1-beta.0",
   "description": "Minimal tool for end-of-day braindumps.",
   "main": "./.webpack/main",
   "repository": "git@github.com:Staffbase/retrace.git",
@@ -27,6 +27,7 @@
     "@tippyjs/react": "^4.2.6",
     "ajv": "^8.8.2",
     "ajv-formats": "^2.1.1",
+    "date-fns": "^2.27.0",
     "dompurify": "^2.0.17",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.0.1",
@@ -37,6 +38,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.1.3",
+    "react-router-dom": "6",
     "redux": "^4.0.5",
     "styled-components": "^5.1.1"
   },

@@ -17,15 +17,22 @@ limitations under the License.
 import React, { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { format } from "date-fns";
 import { StoreState, Item } from "../store/Types";
-import ListItem from "./ListItem";
+import ListItem, { StyledListItem } from "./ListItem";
 
-const List = (): ReactElement => {
+const List = ({ showAll }: { showAll: boolean }): ReactElement => {
   const data = useSelector((state: StoreState) => state.data);
   const filter = useSelector((state: StoreState) => state.filter);
 
+  const bucketsByDay: Record<string, Item[]> = {};
+
   const items = Object.values(data)
     .filter((item: Item) => {
+      if (showAll) {
+        return true;
+      }
+
       return item.createdAt >= filter.from && item.createdAt <= filter.to;
     })
     .sort((itemA: Item, itemB: Item) => {
@@ -35,9 +42,30 @@ const List = (): ReactElement => {
         ? -1
         : 1;
     })
-    .map((item) => <ListItem key={item.id} item={item} />);
+    .forEach((item: Item) => {
+      const created = new Date(item.createdAt);
+      const id = format(created, "yyyy-MM-dd");
+      bucketsByDay[id] = [...(bucketsByDay[id] || []), item];
+    });
 
-  return <StyledList>{items}</StyledList>;
+  const days = Object.entries(bucketsByDay).map(([id, items]) => {
+    const entries = items.map((item: Item) => {
+      return <ListItem item={item} key={item.id} />;
+    });
+
+    return (
+      <div className="day" key={id}>
+        {showAll && (
+          <StyledListItem className="day-header">
+            {format(new Date(id), "PPPP")}
+          </StyledListItem>
+        )}
+        {entries}
+      </div>
+    );
+  });
+
+  return <StyledList>{days}</StyledList>;
 };
 
 export default List;
@@ -49,4 +77,9 @@ const StyledList = styled.ul`
   padding: 0;
   height: 232px;
   overflow: auto;
+
+  .page.history & {
+    height: auto;
+    min-height: 100vh;
+  }
 `;

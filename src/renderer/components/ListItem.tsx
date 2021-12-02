@@ -92,12 +92,16 @@ export default function ListItem({ item }: Props) {
   );
 }
 
-const StyledListItem = styled.li`
+export const StyledListItem = styled.li`
   padding: 8px 15px;
   color: var(--text);
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: row;
+
+  &.day-header {
+    font-weight: 600;
+  }
 
   & > small {
     color: var(--textDark);

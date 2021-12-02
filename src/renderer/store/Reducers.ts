@@ -19,15 +19,7 @@ import { ActionPayload, ActionTypes } from "./Actions";
 import { Reducer } from "redux";
 import { nanoid } from "nanoid";
 import { extractHashtags, extractMentions } from "../utils";
-
-const DEFAULT_STATE = {
-  data: {},
-  total: 0,
-  filter: {
-    from: 0,
-    to: 0,
-  },
-};
+import { DEFAULT_STATE } from "./Store";
 
 export const reducer: Reducer<
   StoreState,

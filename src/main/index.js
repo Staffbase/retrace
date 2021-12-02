@@ -19,7 +19,7 @@ import { globalShortcut, ipcMain, Menu } from "electron";
 import { join } from "path";
 import ElectronStore from "electron-store";
 import defaultConfig from "./config.default.json";
-import electron, { nativeImage } from "electron";
+import electron, { nativeImage, BrowserWindow } from "electron";
 
 const config = new ElectronStore({
   name: "config",
@@ -31,23 +31,60 @@ const getIcon = () => {
   return nativeImage.createFromPath(path);
 };
 
+const webPreferences = {
+  nodeIntegration: true,
+  nativeWindowOpen: true,
+  devTools: process.env.NODE_ENV !== "production",
+};
+
 const mb = menubar({
   index: MAIN_WINDOW_WEBPACK_ENTRY,
   browserWindow: {
     alwaysOnTop: true,
     useContentSize: true,
-    transparent: true,
-    width: 500,
+    transparent: false,
+    width: process.env.NODE_ENV === "production" ? 500 : 1000,
     height: 47,
-    webPreferences: {
-      nodeIntegration: true,
-    },
+    webPreferences,
   },
   icon: getIcon(),
   preloadWindow: true,
   windowPosition: "trayRight",
-  tooltip: "RE:Trace",
+  tooltip: "RE-Trace",
 });
+
+const childWindows = {};
+
+function openChildWindow(path) {
+  let win = childWindows[path];
+
+  if (win) {
+    if (win.isMinimized()) {
+      win.restore();
+    }
+
+    win.focus();
+  } else {
+    win = new BrowserWindow({
+      width: process.env.NODE_ENV === "production" ? 500 : 1000,
+      height: 500,
+      center: true,
+      resizable: true,
+      show: false,
+      webPreferences,
+    });
+
+    win.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
+      win.show();
+    });
+
+    win.on("closed", () => {
+      delete childWindows[path];
+    });
+
+    childWindows[path] = win;
+  }
+}
 
 electron.nativeTheme.on("updated", () => {
   mb.tray.setImage(getIcon());
@@ -71,6 +108,11 @@ const expand = (skipEvent) => {
 
 const secondaryMenu = Menu.buildFromTemplate([
   {
+    label: "History",
+    click: openChildWindow.bind(null, "/history"),
+    accelerator: "CommandOrControl+H",
+  },
+  {
     label: "Quit",
     click: mb.app.quit,
     accelerator: "CommandOrControl+Q",
@@ -88,8 +130,6 @@ mb.on("ready", () => {
   if (!config.get("floatShortcut")) {
     config.set("floatShortcut", "CommandOrControl+L");
   }
-
-  // mb.window.webContents.openDevTools();
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered

@@ -1,5 +1,5 @@
 /*
-Copyright 2020, Staffbase GmbH and contributors.
+Copyright 2021, Staffbase GmbH and contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,18 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import React, { ReactElement } from "react";
-import List from "./List";
-import Calendar from "./Calendar";
-import styled from "styled-components";
+import React from "react";
+import List from "../components/List";
 
-export default function DetailView(): ReactElement {
+export default function HistoryView() {
   return (
-    <StyledDetails>
-      <Calendar />
-      <List showAll={false} />
-    </StyledDetails>
+    <div className="page history">
+      <List showAll={true} />
+    </div>
   );
 }
-
-const StyledDetails = styled.div``;
