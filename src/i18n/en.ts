@@ -12,6 +12,16 @@ export const MAIN = {
   headline: "What's on your mind?",
 };
 
+export const PAGES = {
+  settings: "Settings",
+  logbook: "Logbook",
+};
+
+export const PAGE_SETTINGS = {
+  autostart: "Start with system",
+  shortcut: "Opening shortcut",
+};
+
 export const ACTIONS = {
   edit: "Edit",
   save: "Save",

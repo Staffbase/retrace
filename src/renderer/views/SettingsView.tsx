@@ -18,8 +18,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import config from "../store/ConfigStore";
 import Page from "../components/Page";
+import { useTranslation } from "../../i18n";
 
 export default function SettingsView() {
+  const { PAGES, PAGE_SETTINGS } = useTranslation();
   const [autostart, setAutostart] = useState(config.get("autostart"));
   const [shortcut, setShortcut] = useState(config.get("floatShortcut"));
 
@@ -32,10 +34,10 @@ export default function SettingsView() {
   }, [autostart]);
 
   return (
-    <Page id="settings" title="Settings">
+    <Page id="settings" title={PAGES.settings}>
       <StyledSettings>
         <div>
-          <label htmlFor="autostart">Start with system</label>
+          <label htmlFor="autostart">{PAGE_SETTINGS.autostart}</label>
           <input
             id="autostart"
             type="checkbox"
@@ -45,7 +47,7 @@ export default function SettingsView() {
         </div>
 
         <div className="vertical">
-          <label htmlFor="shortcut">Opening shortcut</label>
+          <label htmlFor="shortcut">{PAGE_SETTINGS.shortcut}</label>
           <input
             id="shortcut"
             type="text"
