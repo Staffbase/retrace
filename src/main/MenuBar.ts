@@ -70,7 +70,11 @@ export default class MenuBar {
       this.menuBar?.tray.setImage(getIcon());
     });
 
-    this.menuBar.on("focus-lost", this.menuBar.hideWindow);
+    this.menuBar.on("focus-lost", () => {
+      if (!Object.keys(this.childWindows).length) {
+        this.menuBar?.hideWindow();
+      }
+    });
 
     this.menuBar.on("after-hide", () => {
       // restore initial menu bar app position
