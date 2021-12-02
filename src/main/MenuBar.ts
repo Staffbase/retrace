@@ -23,6 +23,7 @@ import electron, {
 import { Menubar, menubar } from "menubar";
 import { join } from "path";
 import config from "../renderer/store/ConfigStore";
+import { getTranslation } from "../i18n/index";
 
 const getIcon = () => {
   const path = join(__dirname, `assets/iconTemplate.png`);
@@ -64,7 +65,9 @@ export default class MenuBar {
 
     this.registerAutoStart(config.get("autostart"));
 
-    config.set("locale", this.menuBar.app.getLocale());
+    if (!config.get("locale")) {
+      config.set("locale", this.menuBar.app.getLocale());
+    }
 
     electron.nativeTheme.on("updated", () => {
       this.menuBar?.tray.setImage(getIcon());
@@ -96,6 +99,10 @@ export default class MenuBar {
             this.menuBar?.tray.popUpContextMenu(this.getSecondaryMenu());
           });
 
+          config.onDidChange("locale", () => {
+            this.menuBar?.tray.popUpContextMenu(this.getSecondaryMenu());
+          });
+
           this.menuBar?.window?.webContents.send("reset-calendar");
 
           resolve();
@@ -107,24 +114,25 @@ export default class MenuBar {
   }
 
   getSecondaryMenu() {
+    const { PAGES } = getTranslation();
+
     return Menu.buildFromTemplate([
       {
-        label: "History",
+        label: PAGES.history,
         click: this.openChildWindow.bind(this, "/history"),
         accelerator: "CommandOrControl+H",
       },
       {
-        label: "Settings",
+        label: PAGES.settings,
         click: this.openChildWindow.bind(this, "/settings", {
           width: 400,
           height: 250,
           resizable: false,
-          modal: true,
         }),
         accelerator: "CommandOrControl+D",
       },
       {
-        label: "Quit",
+        label: PAGES.quit,
         click: this.menuBar?.app.quit,
         accelerator: "CommandOrControl+Q",
       },
