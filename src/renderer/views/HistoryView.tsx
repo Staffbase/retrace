@@ -16,11 +16,24 @@ limitations under the License.
 
 import React from "react";
 import List from "../components/List";
+import Page from "../components/Page";
+import styled from "styled-components";
 
 export default function HistoryView() {
   return (
-    <div className="page history">
-      <List showAll={true} />
-    </div>
+    <Page id="history" title="Logbook">
+      <StyledListSection>
+        <List showAll={true} />
+      </StyledListSection>
+    </Page>
   );
 }
+
+const StyledListSection = styled.section`
+  margin-top: 15px;
+
+  li {
+    padding-left: 0;
+    padding-right: 0;
+  }
+`;

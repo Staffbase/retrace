@@ -37,7 +37,7 @@ const menuBar = menubar({
     alwaysOnTop: true,
     useContentSize: true,
     transparent: false,
-    width: process.env.NODE_ENV === "production" ? 500 : 1000,
+    width: 500,
     height: 47,
     webPreferences,
   },
@@ -60,7 +60,7 @@ function openChildWindow(path, options = {}) {
     win.focus();
   } else {
     win = new BrowserWindow({
-      width: process.env.NODE_ENV === "production" ? 500 : 1000,
+      width: 500,
       height: 500,
       center: true,
       resizable: true,
@@ -76,6 +76,7 @@ function openChildWindow(path, options = {}) {
 
     win.on("closed", () => {
       delete childWindows[path];
+      mb.window.hide();
     });
 
     childWindows[path] = win;
