@@ -23,7 +23,7 @@ export default function DetailView(): ReactElement {
   return (
     <StyledDetails>
       <Calendar />
-      <List />
+      <List showAll={false} />
     </StyledDetails>
   );
 }

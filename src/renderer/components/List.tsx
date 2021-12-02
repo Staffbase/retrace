@@ -19,17 +19,24 @@ import { useSelector } from "react-redux";
 import { StoreState, Item } from "../store/Types";
 import styled from "styled-components";
 import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
+import { format } from "date-fns";
 
 const lpad = (n: number): string => {
   return `${n < 10 ? "0" : ""}${n}`;
 };
 
-const List = (): ReactElement => {
+const List = ({ showAll }: { showAll: boolean }): ReactElement => {
   const data = useSelector((state: StoreState) => state.data);
   const filter = useSelector((state: StoreState) => state.filter);
 
+  const bucketsByDay: Record<string, Item[]> = {};
+
   const items = Object.values(data)
     .filter((item: Item) => {
+      if (showAll) {
+        return true;
+      }
+
       return item.createdAt >= filter.from && item.createdAt <= filter.to;
     })
     .sort((itemA: Item, itemB: Item) => {
@@ -39,7 +46,14 @@ const List = (): ReactElement => {
         ? -1
         : 1;
     })
-    .map((item: Item) => {
+    .forEach((item: Item) => {
+      const created = new Date(item.createdAt);
+      const id = format(created, "yyyy-MM-dd");
+      bucketsByDay[id] = [...(bucketsByDay[id] || []), item];
+    });
+
+  const days = Object.entries(bucketsByDay).map(([id, items]) => {
+    const entries = items.map((item: Item) => {
       const created = new Date(item.createdAt);
 
       return (
@@ -63,8 +77,21 @@ const List = (): ReactElement => {
         </StyledListItem>
       );
     });
+    const day = new Date(id);
 
-  return <StyledList>{items}</StyledList>;
+    return (
+      <div className="day" key={id}>
+        {showAll && (
+          <StyledListItem className="day-header">
+            {format(day, "PPPP")}
+          </StyledListItem>
+        )}
+        {entries}
+      </div>
+    );
+  });
+
+  return <StyledList>{days}</StyledList>;
 };
 
 export default List;
@@ -76,6 +103,11 @@ const StyledList = styled.ul`
   padding: 0;
   height: 232px;
   overflow: auto;
+
+  .page.history & {
+    height: auto;
+    min-height: 100vh;
+  }
 `;
 
 const StyledListItem = styled.li`
@@ -84,6 +116,10 @@ const StyledListItem = styled.li`
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: row;
+
+  &.day-header {
+    font-weight: 600;
+  }
 
   & > small {
     color: var(--textDark);

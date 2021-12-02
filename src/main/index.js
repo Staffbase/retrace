@@ -19,7 +19,7 @@ import { globalShortcut, ipcMain, Menu } from "electron";
 import { join } from "path";
 import ElectronStore from "electron-store";
 import defaultConfig from "./config.default.json";
-import electron, { nativeImage } from "electron";
+import electron, { nativeImage, BrowserWindow } from "electron";
 
 const config = new ElectronStore({
   name: "config",
@@ -37,10 +37,12 @@ const mb = menubar({
     alwaysOnTop: true,
     useContentSize: true,
     transparent: true,
-    width: 500,
+    width: process.env.NODE_ENV === "production" ? 500 : 1000,
     height: 47,
     webPreferences: {
       nodeIntegration: true,
+      nativeWindowOpen: true,
+      devTools: process.env.NODE_ENV !== "production",
     },
   },
   icon: getIcon(),
@@ -48,6 +50,28 @@ const mb = menubar({
   windowPosition: "trayRight",
   tooltip: "RE:Trace",
 });
+
+const childWindows = {};
+
+function openChildWindow(path) {
+  const childWindow = new BrowserWindow({
+    width: process.env.NODE_ENV === "production" ? 500 : 1000,
+    height: 500,
+    center: true,
+    resizable: true,
+    show: false,
+    webPreferences: {
+      nodeIntegration: true,
+      nativeWindowOpen: true,
+      devTools: process.env.NODE_ENV !== "production",
+
+    },
+  });
+
+  childWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
+    childWindow.show();
+  });
+}
 
 electron.nativeTheme.on("updated", () => {
   mb.tray.setImage(getIcon());
@@ -71,6 +95,11 @@ const expand = (skipEvent) => {
 
 const secondaryMenu = Menu.buildFromTemplate([
   {
+    label: "History",
+    click: openChildWindow.bind(null, "/history"),
+    accelerator: "CommandOrControl+H",
+  },
+  {
     label: "Quit",
     click: mb.app.quit,
     accelerator: "CommandOrControl+Q",
@@ -89,7 +118,9 @@ mb.on("ready", () => {
     config.set("floatShortcut", "CommandOrControl+L");
   }
 
-  mb.window.webContents.openDevTools();
+  if (!process.env.NODE_ENV === "production") {
+    mb.window.webContents.openDevTools();
+  }
 
   globalShortcut.register(config.get("floatShortcut"), () => {
     // initiate smaller hotkey mode, collapsed and centered
