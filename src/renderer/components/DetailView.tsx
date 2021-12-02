@@ -18,12 +18,14 @@ import React, { ReactElement } from "react";
 import List from "./List";
 import Calendar from "./Calendar";
 import styled from "styled-components";
+import StatusBar from "./StatusBar";
 
 export default function DetailView(): ReactElement {
   return (
     <StyledDetails>
       <Calendar />
       <List showAll={false} />
+      <StatusBar />
     </StyledDetails>
   );
 }

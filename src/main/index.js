@@ -28,3 +28,5 @@ ipcMain.on("autostart-changed", (_, autostart) =>
 ipcMain.on("floatShortcut-changed", (_, shortcut) =>
   menuBar.registerFloatShortcut(shortcut)
 );
+ipcMain.on('open-history', menuBar.openHistory.bind(menuBar));
+ipcMain.on('open-settings', menuBar.openSettings.bind(menuBar));

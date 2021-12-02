@@ -106,21 +106,28 @@ export default class MenuBar {
     });
   }
 
+  openHistory() {
+    this.openChildWindow("/history")
+  }
+
+  openSettings() {
+    this.openChildWindow("/settings", {
+      width: 400,
+      height: 250,
+      resizable: false,
+    });
+  }
+
   getSecondaryMenu() {
     return Menu.buildFromTemplate([
       {
         label: "History",
-        click: this.openChildWindow.bind(this, "/history"),
+        click: this.openHistory.bind(this),
         accelerator: "CommandOrControl+H",
       },
       {
         label: "Settings",
-        click: this.openChildWindow.bind(this, "/settings", {
-          width: 400,
-          height: 250,
-          resizable: false,
-          modal: true,
-        }),
+        click: this.openSettings.bind(this),
         accelerator: "CommandOrControl+D",
       },
       {
@@ -177,7 +184,7 @@ export default class MenuBar {
       this.menuBar?.window?.webContents.send("window-expand");
     }
 
-    this.menuBar?.window?.setSize(500, 350);
+    this.menuBar?.window?.setSize(500, 375);
   };
 
   hide = () => {

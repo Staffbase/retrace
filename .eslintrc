@@ -51,5 +51,6 @@
     "MAIN_WINDOW_WEBPACK_ENTRY": "readonly",
     "navigator": "readonly",
     "document": "readonly",
+    "window": "readonly"
   }
 }
