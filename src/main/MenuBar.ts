@@ -118,7 +118,7 @@ export default class MenuBar {
   }
 
   openHistory() {
-    this.openChildWindow("/history")
+    this.openChildWindow("/history");
   }
 
   openSettings() {
