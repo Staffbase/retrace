@@ -7,6 +7,7 @@ import ListItemContextMenu from "./ListItemContextMenu";
 import { HASHTAG_REGEX, MENTION_REGEX } from "../utils";
 import { removeItem, updateItem } from "../store/Actions";
 import { Item } from "../store/Types";
+import { useTranslation } from "../../i18n";
 
 const lpad = (n: number): string => {
   return `${n < 10 ? "0" : ""}${n}`;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 export default function ListItem({ item }: Props) {
+  const { ACTIONS } = useTranslation();
   const dispatch = useDispatch();
   const [mode, setMode] = useState<"view" | "edit">("view");
   const [label, setLabel] = useState(item.label);
@@ -83,8 +85,8 @@ export default function ListItem({ item }: Props) {
             autoFocus={true}
           />
 
-          <button type="submit" title="ESC to cancel">
-            Save
+          <button type="submit" title={ACTIONS.cancel}>
+            {ACTIONS.save}
           </button>
         </form>
       )}

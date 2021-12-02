@@ -26,8 +26,10 @@ import { addItem } from "../store/Actions";
 import styled from "styled-components";
 import { ipcRenderer } from "electron";
 import { flatten } from "../utils";
+import { useTranslation } from "../../i18n";
 
 const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
+  const { MAIN } = useTranslation();
   const dispatch = useDispatch();
   const [value, setValue] = useState<string>("");
 
@@ -63,7 +65,7 @@ const Form = (props: { closeAfterSubmit: boolean }): ReactElement => {
         type="text"
         onChange={onChange}
         value={value}
-        placeholder={"What's on your mind?"}
+        placeholder={MAIN.headline}
         tabIndex={0}
       />
     </StyledForm>
