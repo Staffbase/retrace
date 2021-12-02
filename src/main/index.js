@@ -31,6 +31,12 @@ const getIcon = () => {
   return nativeImage.createFromPath(path);
 };
 
+const webPreferences = {
+  nodeIntegration: true,
+  nativeWindowOpen: true,
+  devTools: process.env.NODE_ENV !== "production",
+};
+
 const mb = menubar({
   index: MAIN_WINDOW_WEBPACK_ENTRY,
   browserWindow: {
@@ -39,38 +45,45 @@ const mb = menubar({
     transparent: true,
     width: process.env.NODE_ENV === "production" ? 500 : 1000,
     height: 47,
-    webPreferences: {
-      nodeIntegration: true,
-      nativeWindowOpen: true,
-      devTools: process.env.NODE_ENV !== "production",
-    },
+    webPreferences,
   },
   icon: getIcon(),
   preloadWindow: true,
   windowPosition: "trayRight",
-  tooltip: "RE:Trace",
+  tooltip: "RE-Trace",
 });
 
 const childWindows = {};
 
 function openChildWindow(path) {
-  const childWindow = new BrowserWindow({
-    width: process.env.NODE_ENV === "production" ? 500 : 1000,
-    height: 500,
-    center: true,
-    resizable: true,
-    show: false,
-    webPreferences: {
-      nodeIntegration: true,
-      nativeWindowOpen: true,
-      devTools: process.env.NODE_ENV !== "production",
+  let win = childWindows[path];
 
-    },
-  });
+  if (win) {
+    if (win.isMinimized()) {
+      win.restore();
+    }
 
-  childWindow.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
-    childWindow.show();
-  });
+    win.focus();
+  } else {
+    win = new BrowserWindow({
+      width: process.env.NODE_ENV === "production" ? 500 : 1000,
+      height: 500,
+      center: true,
+      resizable: true,
+      show: false,
+      webPreferences,
+    });
+
+    win.loadURL(`${MAIN_WINDOW_WEBPACK_ENTRY}#${path}`).then(() => {
+      win.show();
+    });
+
+    win.on("closed", () => {
+      delete childWindows[path];
+    });
+
+    childWindows[path] = win;
+  }
 }
 
 electron.nativeTheme.on("updated", () => {
