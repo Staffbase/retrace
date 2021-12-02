@@ -9,7 +9,7 @@ In the evening, make sure to take a deep breath and recap your day.
 
 ## Installation
 
-Grab the latest build from our [release page](https://github.com/Staffbase/retrace/releases).
+Grab the latest build from our [release page](https://github.com/Staffbase/retrace/releases) or use `brew install ice8lue/homebrew-taps/`.
 
 ## Development
 
