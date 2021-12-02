@@ -1,5 +1,5 @@
 {
-  "name": "@ice8lue/re-trace",
+  "name": "re-trace",
   "productName": "RE-Trace",
   "version": "1.0.1-beta.0",
   "description": "Minimal tool for end-of-day braindumps.",
